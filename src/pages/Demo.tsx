@@ -67,7 +67,7 @@ const Demo = () => {
         {step}
         <br />
         {jumpingJackCount}
-        <button type="button" onClick={getUserLocation}>
+        <button type="button" onClick={() => setInterval(getUserLocation, 1000)}>
           Get User Location
         </button>
         {/* if the user location variable has a value, print the users location */}

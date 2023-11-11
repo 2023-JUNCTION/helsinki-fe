@@ -6,7 +6,7 @@ import CanvasImageSequence from 'react-canvas-image-sequence';
 
 import styles from './Map.module.scss';
 
-const IMAGES = Array.from({ length: 30 }, (v, i) => `Red hair Waking00${String(i + 1).padStart(2, '0')}.png`);
+const IMAGES = Array.from({ length: 30 }, (_v, i) => `Red hair Waking00${String(i + 1).padStart(2, '0')}.png`);
 
 const Map = () => {
   const ref = useRef<any>(null);
@@ -19,10 +19,6 @@ const Map = () => {
     <div className={styles.container}>
       <div className={styles.map} {...events} ref={ref}>
         <img className={styles.image} src="/cat1.png" alt="cat" />
-        <video width="600" height="100%" autoPlay loop muted style={{ zIndex: 3 }}>
-          <source src="https://rotato.netlify.app/alpha-demo/movie-hevc.mov" type='video/mp4; codecs="hvc1"' />
-          <source src="https://rotato.netlify.app/alpha-demo/movie-webm.webm" type="video/webm" />
-        </video>
         <button type="button" onClick={() => console.log('??')} style={{ zIndex: 3, position: 'absolute' }}>
           <CanvasImageSequence
             width="300px"
