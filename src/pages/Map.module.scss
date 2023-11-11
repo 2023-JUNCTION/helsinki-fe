@@ -1,0 +1,34 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100vw;
+
+  .map {
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    position: relative;
+
+    .image {
+      top: 0;
+      left: 0;
+      position: absolute;
+      width: 10000px;
+      height: 10000px;
+    }
+
+    video {
+      z-index: 3;
+      position: absolute;
+    }
+
+  }
+
+  .map::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+}

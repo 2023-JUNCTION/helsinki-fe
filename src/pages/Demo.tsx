@@ -1,9 +1,38 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import React, { useState } from 'react';
 import { useDeviceMotion } from '../hooks';
 
 const Demo = () => {
   const { step, jumpingJackCount, onClick } = useDeviceMotion();
+  // const variable array to save the users location
+  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number }>({
+    latitude: 0,
+    longitude: 0,
+  });
 
+  // define the function that finds the users geolocation
+  const getUserLocation = () => {
+    // if geolocation is supported by the users browser
+    if (navigator.geolocation) {
+      // get the current users location
+      navigator.geolocation.getCurrentPosition(
+        position => {
+          // save the geolocation coordinates in two variables
+          const { latitude, longitude } = position.coords as any;
+          // update the value of userlocation variable
+          setUserLocation({ latitude, longitude });
+        },
+        // if there was an error getting the users location
+        () => {
+          // error
+        },
+      );
+    }
+    // if geolocation is not supported by the users browser
+    else {
+      // error
+    }
+  };
   return (
     <div
       style={{
@@ -38,6 +67,17 @@ const Demo = () => {
         {step}
         <br />
         {jumpingJackCount}
+        <button type="button" onClick={getUserLocation}>
+          Get User Location
+        </button>
+        {/* if the user location variable has a value, print the users location */}
+        {userLocation && (
+          <div>
+            <h2>User Location</h2>
+            <p>Latitude: {userLocation.latitude}</p>
+            <p>Longitude: {userLocation.longitude}</p>
+          </div>
+        )}
       </div>
     </div>
   );
