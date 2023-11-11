@@ -23,15 +23,15 @@ const Demo = () => {
     const accGravity = event.accelerationIncludingGravity;
     setYg(accGravity.y);
 
-    if (Number(accGravity.y) < -5 && !upRef.current) {
+    if (Number(accGravity.y) < -7 && !upRef.current) {
       upRef.current = true;
     }
 
-    if (Math.abs(accGravity.z) > 5 && upRef.current) {
+    if (Math.abs(accGravity.z) > 5) {
       parallelRef.current = true;
     }
 
-    if (Number(accGravity.y) > 5 && upRef.current && parallelRef.current) {
+    if (Number(accGravity.y) > 7 && upRef.current && parallelRef.current) {
       doneRef.current = true;
     }
 
