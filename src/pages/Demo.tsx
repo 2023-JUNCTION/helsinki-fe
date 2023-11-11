@@ -2,7 +2,7 @@ import React from 'react';
 import { useDeviceMotion } from '../hooks';
 
 const Demo = () => {
-  const { step, jumpingJackCount } = useDeviceMotion();
+  const { step, jumpingJackCount, onClick } = useDeviceMotion();
 
   return (
     <div
@@ -32,6 +32,9 @@ const Demo = () => {
           alignItems: 'center',
         }}
       >
+        <button type="button" onClick={onClick}>
+          grant
+        </button>
         {step}
         <br />
         {jumpingJackCount}
