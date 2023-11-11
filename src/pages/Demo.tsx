@@ -11,8 +11,8 @@ const Demo = () => {
   // const [orientGranted, setOrientGranted] = useState(false);
 
   const upRef = useRef(false);
-  const parallelRef = useRef(false);
-  const doneRef = useRef(false);
+  const accYRef = useRef(false);
+  const upAnddownRef = useRef(false);
 
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
@@ -22,6 +22,9 @@ const Demo = () => {
   const motionHandler = useCallback((event: DeviceMotionEvent) => {
     setGranted(true);
     const accGravity = event.accelerationIncludingGravity;
+    const acc = event.acceleration;
+
+    const accY = acc?.y ?? 0;
     const accGravityY = accGravity?.y ?? 0;
 
     setYg(accGravityY);
@@ -30,17 +33,27 @@ const Demo = () => {
       upRef.current = true;
     }
 
-    if (Number(accGravityY) > 6 && upRef.current && parallelRef.current) {
-      doneRef.current = true;
+    if (Number(accGravityY) > 8) {
+      accYRef.current = true;
     }
 
-    if (doneRef.current) {
+    if (Number(accGravityY) > 6 && upRef.current) {
+      upAnddownRef.current = true;
+    }
+
+    if (upAnddownRef.current && accYRef.current) {
       // 성공
       setCount(prev => prev + 1);
       upRef.current = false;
-      parallelRef.current = false;
-      doneRef.current = false;
+      accYRef.current = false;
+      upAnddownRef.current = false;
     }
+
+    setTimeout(() => {
+      upRef.current = false;
+      accYRef.current = false;
+      upAnddownRef.current = false;
+    }, 3000);
   }, []);
 
   function orientationHandler() {
