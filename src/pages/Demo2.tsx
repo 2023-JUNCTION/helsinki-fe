@@ -5,6 +5,7 @@ import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { API } from '~/api';
 
 const Demo = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [step, setStep] = useState<number>(0);
   const [granted, setGranted] = useState(false);
   // const [orientGranted, setOrientGranted] = useState(false);
@@ -34,7 +35,8 @@ const Demo = () => {
       doneRef.current = true;
     }
 
-    if (doneRef.current) { // 성공
+    if (doneRef.current) {
+      // 성공
       setCount(prev => prev + 1);
       upRef.current = false;
       parallelRef.current = false;
@@ -96,46 +98,46 @@ const Demo = () => {
   }
 
   return (
+    <div
+      style={{
+        width: '100vw',
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative',
+      }}
+    >
+      <img src="/huawei_black.png" alt="watch" style={{ width: 'auto', height: '80%' }} />
       <div
-          style={{
-            width: '100vw',
-            height: '100vh',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'relative',
-          }}
+        style={{
+          position: 'absolute',
+          transform: 'translate(-50%, -50%)',
+          width: 'auto',
+          aspectRatio: 0.52,
+          height: '46%',
+          background: 'white',
+          top: '50%',
+          left: 'calc(50% - 3px)',
+          borderRadius: 15,
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
       >
-        <img src="/huawei_black.png" alt="watch" style={{ width: 'auto', height: '80%' }} />
-        <div
-            style={{
-              position: 'absolute',
-              transform: 'translate(-50%, -50%)',
-              width: 'auto',
-              aspectRatio: 0.52,
-              height: '46%',
-              background: 'white',
-              top: '50%',
-              left: 'calc(50% - 3px)',
-              borderRadius: 15,
-              display: 'flex',
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-        >
-          <button type="button" onClick={onClick}>
-            자이로 권한 획득{granted ? 'yes' : 'no'}
-            <br />
-            {/* 회전 권한 획득{orientGranted ? 'yes' : 'no'} */}
-          </button>
+        <button type="button" onClick={onClick}>
+          자이로 권한 획득{granted ? 'yes' : 'no'}
           <br />
-          step: {step}
-          <br />
-          yg: {yg}
-          <br />
-          count: {count}
-        </div>
+          {/* 회전 권한 획득{orientGranted ? 'yes' : 'no'} */}
+        </button>
+        <br />
+        step: {step}
+        <br />
+        yg: {yg}
+        <br />
+        count: {count}
       </div>
+    </div>
   );
 };
 
