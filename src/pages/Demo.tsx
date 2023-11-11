@@ -7,11 +7,11 @@ import { API } from '~/api';
 const Demo = () => {
   const [step, setStep] = useState<number>(0);
   const [granted, setGranted] = useState(false);
-  const [orientGranted, setOrientGranted] = useState(false);
+  // const [orientGranted, setOrientGranted] = useState(false);
 
   const [flag, setFlag] = useState(false);
   const [yg, setYg] = useState(0);
-  const [beta, setBeta] = useState(0);
+  // const [beta, setBeta] = useState(0);
 
   function motionHandler(event: { accelerationIncludingGravity: any }) {
     setGranted(true);
@@ -112,7 +112,7 @@ const Demo = () => {
         <button type="button" onClick={onClick}>
           자이로 권한 획득{granted ? 'yes' : 'no'}
           <br />
-          회전 권한 획득{orientGranted ? 'yes' : 'no'}
+          {/* 회전 권한 획득{orientGranted ? 'yes' : 'no'} */}
         </button>
         <br />
         step: {step}
@@ -121,7 +121,7 @@ const Demo = () => {
         <br />
         yg: {yg}
         <br />
-        beta: {beta}
+        {/* beta: {beta} */}
       </div>
     </div>
   );
