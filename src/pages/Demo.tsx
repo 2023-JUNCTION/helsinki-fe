@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { API } from '~/api';
 
 const Demo = () => {
@@ -9,7 +9,8 @@ const Demo = () => {
   const [granted, setGranted] = useState(false);
   // const [orientGranted, setOrientGranted] = useState(false);
 
-  const [flag, setFlag] = useState(false);
+  const [flag] = useState(false);
+  const flagRef = useRef(false);
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
@@ -21,11 +22,11 @@ const Demo = () => {
       setYg(accGravity.y);
       if (Number(accGravity.y) > 8 && !flag) {
         setCount(prev => prev - 1);
-        setFlag(true);
+        flagRef.current = true;
       }
       if (Number(accGravity.y) < -8 && flag) {
         setCount(prev => prev + 1);
-        setFlag(false);
+        flagRef.current = false;
         setStep(prev => prev + 1);
       }
     },
