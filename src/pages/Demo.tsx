@@ -2,6 +2,7 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import React, { useEffect, useState } from 'react';
+import _debounce from 'lodash/debounce';
 import { API } from '~/api';
 
 const Demo = () => {
@@ -48,7 +49,7 @@ const Demo = () => {
     if (typeof (window as any).DeviceMotionEvent.requestPermission === 'function') {
       (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
         if (permissionState === 'granted') {
-          window.addEventListener('devicemotion', motionHandler);
+          window.addEventListener('devicemotion', _debounce(motionHandler, 1000));
         }
       });
     } else {
