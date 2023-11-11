@@ -20,10 +20,10 @@ const Demo = () => {
     if (Number(accGravity.y) < -8) {
       setFlag(true);
     }
-    if (Number(accGravity.y) > 8) {
+    if (Number(accGravity.y) > 0) {
       if (flag === true) {
-        setStep(prev => prev + 1);
         setFlag(false);
+        setStep(prev => prev + 1);
       }
     }
   }
