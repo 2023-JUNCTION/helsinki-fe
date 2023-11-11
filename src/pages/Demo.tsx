@@ -48,41 +48,13 @@ const Demo = () => {
     }
   }, []);
 
-  // async function onClick() {
-  //   alert('asdf');
-  //   await window.DeviceMotionEvent.requestPermission()
-  //     .then(permissionState => {
-  //       alert(`AAA${permissionState}`);
-  //       if (permissionState === 'granted') {
-  //         window.addEventListener('devicemotion', () => {});
-  //       }
-  //     })
-  //     .catch(console.error);
-
-  //   // feature detect
-  //   if (typeof DeviceMotionEvent.requestPermission === 'function') {
-  //     DeviceMotionEvent.requestPermission()
-  //       .then(permissionState => {
-  //         if (permissionState === 'granted') {
-  //           window.addEventListener('devicemotion', () => {});
-  //         }
-  //       })
-  //       .catch(console.error);
-  //   } else {
-  //     // handle regular non iOS 13+ devices
-  //   }
-  //   if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-  //     DeviceOrientationEvent.requestPermission()
-  //       .then(permissionState => {
-  //         if (permissionState === 'granted') {
-  //           window.addEventListener('deviceorientation', () => {});
-  //         }
-  //       })
-  //       .catch(console.error);
-  //   } else {
-  //     // handle regular non iOS 13+ devices
-  //   }
-  // }
+  async function onClick() {
+    await (DeviceMotionEvent as any).requestPermission().then((permissionState: any) => {
+      if (permissionState === 'granted') {
+        window.addEventListener('devicemotion', () => {});
+      }
+    });
+  }
   return (
     <div
       style={{
@@ -122,9 +94,9 @@ const Demo = () => {
         data={['/huawei_black.png', '/huawei_khaki.png', '/huawei.pink.png']}
       />
       {/* <div>{step}aaa</div> */}
-      {/* <button type="button" onClick={onClick}>
+      <button type="button" onClick={onClick}>
         sdfdsf
-      </button> */}
+      </button>
     </div>
   );
 };
