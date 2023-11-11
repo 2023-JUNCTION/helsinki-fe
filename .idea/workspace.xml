@@ -5,7 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="e365d14d-6da5-4fef-a782-9e16637231aa" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/pages/Demo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/Demo.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/Demo2.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,7 +60,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/seungyoungoh/workspace/personal/junction/helsinki-fe",
+    "last_opened_file_path": "/Users/seungyoungoh/workspace/personal/junction/helsinki-fe/src/pages",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.stylelint": "true",
     "node.js.detected.package.tslint": "true",
@@ -72,6 +73,11 @@
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages" />
+    </key>
+  </component>
   <component name="RubyModuleManagerSettings">
     <option name="blackListedRootsPaths">
       <list>
@@ -99,7 +105,7 @@
       <workItem from="1699721266934" duration="426000" />
       <workItem from="1699721712725" duration="29000" />
       <workItem from="1699721752823" duration="17000" />
-      <workItem from="1699721794205" duration="559000" />
+      <workItem from="1699721794205" duration="750000" />
     </task>
     <servers />
   </component>
