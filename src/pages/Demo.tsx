@@ -18,7 +18,6 @@ const Demo = () => {
   const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
 
-
   const motionHandler = useCallback((event: DeviceMotionEvent) => {
     setGranted(true);
     const accGravity = event.accelerationIncludingGravity;
@@ -33,7 +32,7 @@ const Demo = () => {
       upRef.current = true;
     }
 
-    if (Number(accGravityY) > 8) {
+    if (Number(accY) > 8) {
       accYRef.current = true;
     }
 
