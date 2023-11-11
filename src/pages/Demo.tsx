@@ -12,7 +12,6 @@ const Demo = () => {
 
   const upRef = useRef(false);
   const accRef = useRef(false);
-  const upAndDownRef = useRef(false);
 
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
@@ -35,15 +34,15 @@ const Demo = () => {
 
     setYg(accGravityY);
 
-    if (Number(accGravityY) > 3 && !upRef.current) {
+    if (Number(accGravityY) > 5 && !upRef.current) {
       upRef.current = true;
     }
 
-    if (Number(totalAcc) > 3) {
+    if (Number(totalAcc) > 5) {
       accRef.current = true;
     }
 
-    if (upAndDownRef.current && accRef.current) {
+    if (upRef.current && accRef.current) {
       // 성공
       setCount(prev => prev + 1);
       upRef.current = false;
