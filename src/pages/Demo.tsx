@@ -35,11 +35,10 @@ const Demo = () => {
 
     if (Number(accGravityY) < -6 && !upRef.current) {
       upRef.current = true;
-
-      setTimeout(() => {
-        upRef.current = false;
-        accRef.current = false;
-      }, 5000);
+      // setTimeout(() => {
+      //   upRef.current = false;
+      //   accRef.current = false;
+      // }, 5000);
     }
 
     if (Number(totalAcc) > 3) {
