@@ -14,8 +14,6 @@ const Demo = () => {
   const accRef = useRef(false);
   const upAndDownRef = useRef(false);
 
-  const [totalAcc, setTotalAcc] = useState(0);
-
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
