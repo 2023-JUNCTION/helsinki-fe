@@ -15,7 +15,7 @@ const Demo = () => {
   const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
 
-  function motionHandler(event: { accelerationIncludingGravity: any }) {
+  const motionHandler = _debounce((event: { accelerationIncludingGravity: any }) => {
     setGranted(true);
     const accGravity = event.accelerationIncludingGravity;
     setYg(accGravity.y);
@@ -28,7 +28,7 @@ const Demo = () => {
       setFlag(false);
       setStep(prev => prev + 1);
     }
-  }
+  }, 500);
   function orientationHandler() {
     // event: { beta: any }) {
     // setOrientGranted(true);
@@ -52,10 +52,7 @@ const Demo = () => {
     if (typeof (window as any).DeviceMotionEvent.requestPermission === 'function') {
       (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
         if (permissionState === 'granted') {
-          window.addEventListener(
-            'devicemotion',
-            _debounce(() => motionHandler, 1000),
-          );
+          window.addEventListener('devicemotion', motionHandler);
         }
       });
     } else {
@@ -75,10 +72,7 @@ const Demo = () => {
   async function onClick() {
     await (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
       if (permissionState === 'granted') {
-        window.addEventListener(
-          'devicemotion',
-          _debounce(() => motionHandler, 1000),
-        );
+        window.addEventListener('devicemotion', motionHandler);
       }
     });
     await (window as any).DeviceOrientationEvent.requestPermission().then((permissionState: any) => {
