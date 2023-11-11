@@ -152,9 +152,7 @@ const Demo = () => {
         <br />
         count: {count}
         <br />
-        up&down: {upAndDownRef.current}
-        <br />
-        acc: {accYRef.current}
+        result: {result}
       </div>
     </div>
   );
