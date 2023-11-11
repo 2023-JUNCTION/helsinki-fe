@@ -7,16 +7,19 @@ import { API } from '~/api';
 const Demo = () => {
   const [step, setStep] = useState<number>(0);
   const [granted, setGranted] = useState(false);
+  const [orientGranted, setOrientGranted] = useState(false);
 
   const [flag, setFlag] = useState(false);
   const [yg, setYg] = useState(0);
 
   function motionHandler(event: { accelerationIncludingGravity: any }) {
+    setGranted(true);
     const accGravity = event.accelerationIncludingGravity;
     setYg(accGravity.y);
     return false;
   }
   function orientationHandler(event: { beta: any }) {
+    setOrientGranted(true);
     if (yg - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
       setFlag(true);
     }
@@ -58,13 +61,11 @@ const Demo = () => {
   async function onClick() {
     await (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
       if (permissionState === 'granted') {
-        setGranted(true);
         window.addEventListener('devicemotion', motionHandler);
       }
     });
     await (window as any).DeviceOrientationEvent.requestPermission().then((permissionState: any) => {
       if (permissionState === 'granted') {
-        setGranted(true);
         window.addEventListener('deviceorientation', orientationHandler);
       }
     });
@@ -99,7 +100,9 @@ const Demo = () => {
         }}
       >
         <button type="button" onClick={onClick}>
-          권한 획득{granted ? 'yes' : 'no'}
+          자이로 권한 획득{granted ? 'yes' : 'no'}
+          <br />
+          회전 권한 획득{orientGranted ? 'yes' : 'no'}
         </button>
         <br />
         step: {step}
