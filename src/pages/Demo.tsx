@@ -28,18 +28,19 @@ const Demo = () => {
     }
     return false;
   }
-  function orientationHandler(event: { beta: any }) {
-    setOrientGranted(true);
-    setBeta(event.beta);
-    if (yg < -8) {
-      setFlag(true);
-    }
-    if (yg > 8) {
-      if (flag === true) {
-        setStep(prev => prev + 1);
-        setFlag(false);
-      }
-    }
+  function orientationHandler() {
+    // event: { beta: any }) {
+    // setOrientGranted(true);
+    // setBeta(event.beta);
+    // if (yg < -8) {
+    //   setFlag(true);
+    // }
+    // if (yg > 8) {
+    //   if (flag === true) {
+    //     setStep(prev => prev + 1);
+    //     setFlag(false);
+    //   }
+    // }
   }
 
   useEffect(() => {
