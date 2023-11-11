@@ -15,20 +15,21 @@ const Demo = () => {
   const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
 
-  const motionHandler = _debounce((event: { accelerationIncludingGravity: any }) => {
+  const motionHandler = (event: { accelerationIncludingGravity: any }) => {
     setGranted(true);
     const accGravity = event.accelerationIncludingGravity;
     setYg(accGravity.y);
-    if (Number(accGravity.y) < -8 && !flag) {
+    if (Number(accGravity.y) < 8 && !flag) {
       setCount(prev => prev + 1);
       setFlag(true);
     }
-    if (Number(accGravity.y) > 0 && flag) {
+    if (Number(accGravity.y) > -8 && flag) {
       setCount(prev => prev + 1);
       setFlag(false);
       setStep(prev => prev + 1);
     }
-  }, 500);
+  };
+
   function orientationHandler() {
     // event: { beta: any }) {
     // setOrientGranted(true);
