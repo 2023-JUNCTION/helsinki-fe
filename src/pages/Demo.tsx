@@ -12,10 +12,12 @@ const Demo = () => {
 
   const upRef = useRef(false);
   const accRef = useRef(false);
+  const lockRef = useRef(false);
 
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
   const [totalAcc, setTotalAcc] = useState(0);
+
   // const [beta, setBeta] = useState(0);
 
   const motionHandler = useCallback((event: DeviceMotionEvent) => {
@@ -38,15 +40,20 @@ const Demo = () => {
       upRef.current = true;
     }
 
-    if (Number(totalAcc) > 5) {
+    if (Number(totalAcc) > 20) {
       accRef.current = true;
     }
 
-    if (upRef.current && accRef.current) {
+    if (upRef.current && accRef.current && lockRef.current === false) {
       // 성공
       setCount(prev => prev + 1);
+      lockRef.current = true;
       upRef.current = false;
       accRef.current = false;
+
+      setTimeout(() => {
+        lockRef.current = false;
+      }, 3000);
     }
   }, []);
 
