@@ -20,11 +20,11 @@ const Demo = () => {
       setGranted(true);
       const accGravity = event.accelerationIncludingGravity;
       setYg(accGravity.y);
-      if (Number(accGravity.y) > 8 && !flag) {
+      if (Number(accGravity.y) > 8 && !flagRef.current) {
         setCount(prev => prev - 1);
         flagRef.current = true;
       }
-      if (Number(accGravity.y) < -8 && flag) {
+      if (Number(accGravity.y) < -8 && flagRef.current) {
         setCount(prev => prev + 1);
         flagRef.current = false;
         setStep(prev => prev + 1);
