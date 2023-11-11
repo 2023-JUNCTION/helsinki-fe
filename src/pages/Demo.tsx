@@ -151,10 +151,6 @@ const Demo = () => {
         yg: {yg}
         <br />
         count: {count}
-        <br />
-        upAndDown: {upAndDown}
-        <br />
-        totalAcc: {totalAcc}
       </div>
     </div>
   );
