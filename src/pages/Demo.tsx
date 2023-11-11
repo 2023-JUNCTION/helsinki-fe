@@ -11,6 +11,23 @@ const Demo = () => {
   const [flag, setFlag] = useState(false);
   const [yg, setYg] = useState(0);
 
+  function motionHandler(event: { accelerationIncludingGravity: any }) {
+    const accGravity = event.accelerationIncludingGravity;
+    setYg(accGravity.y);
+    return false;
+  }
+  function orientationHandler(event: { beta: any }) {
+    if (yg - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
+      setFlag(true);
+    }
+    if (yg - 10 * Math.sin((event.beta * Math.PI) / 180) < -1) {
+      if (flag === true) {
+        setStep(prev => prev + 1);
+        setFlag(false);
+      }
+    }
+  }
+
   useEffect(() => {
     (async () => {
       await API.Test.readHealthCheck();
@@ -25,44 +42,30 @@ const Demo = () => {
     } else {
       // handle regular non iOS 13+ devices
     }
-
-    // (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
-    //   if (permissionState === 'granted') {
-    //     window.addEventListener('devicemotion', motionHandler, true);
-    //   }
-    // });
+    if (typeof (window as any).DeviceOrientationEvent.requestPermission === 'function') {
+      (window as any).DeviceOrientationEvent.requestPermission().then((permissionState: any) => {
+        if (permissionState === 'granted') {
+          window.addEventListener('deviceorientation', orientationHandler);
+        }
+      });
+    } else {
+      // handle regular non iOS 13+ devices
+    }
     // window.addEventListener('devicemotion', motionHandler, true);
     // window.addEventListener('deviceorientation', orientationHandler, true);
   }, []);
 
   async function onClick() {
-    function motionHandler(event: { accelerationIncludingGravity: any }) {
-      const accGravity = event.accelerationIncludingGravity;
-      setYg(accGravity.y);
-      return false;
-    }
-    function orientationHandler(event: { beta: any }) {
-      if (yg - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
-        setFlag(true);
-      }
-      if (yg - 10 * Math.sin((event.beta * Math.PI) / 180) < -1) {
-        if (flag === true) {
-          setStep(prev => prev + 1);
-          setFlag(false);
-        }
-      }
-    }
-
     await (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
       if (permissionState === 'granted') {
         setGranted(true);
-        window.addEventListener('devicemotion', motionHandler, true);
+        window.addEventListener('devicemotion', motionHandler);
       }
     });
-    await (window as any).DeviceMotionEvent.DeviceOrientationEvent().then((permissionState: any) => {
+    await (window as any).DeviceOrientationEvent.requestPermission().then((permissionState: any) => {
       if (permissionState === 'granted') {
         setGranted(true);
-        window.addEventListener('deviceorientation', orientationHandler, true);
+        window.addEventListener('deviceorientation', orientationHandler);
       }
     });
   }
