@@ -6,11 +6,9 @@ import CanvasImageSequence from 'react-canvas-image-sequence';
 import { API } from '~/api';
 
 const Demo = () => {
-  const [step, setStep] = useState<number>(0);
+  const [, setStep] = useState<number>(0);
   const flag = useRef(false);
   const yg = useRef(0);
-
-  alert(step);
 
   useEffect(() => {
     (async () => {
