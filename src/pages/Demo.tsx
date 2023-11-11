@@ -12,7 +12,7 @@ const Demo = () => {
 
   const upRef = useRef(false);
   const accYRef = useRef(false);
-  const upAnddownRef = useRef(false);
+  const upAndDownRef = useRef(false);
 
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
@@ -32,27 +32,27 @@ const Demo = () => {
       upRef.current = true;
     }
 
-    if (Number(accY) > 8) {
+    if (Number(accY) > 3) {
       accYRef.current = true;
     }
 
     if (Number(accGravityY) > 6 && upRef.current) {
-      upAnddownRef.current = true;
+      upAndDownRef.current = true;
     }
 
-    if (upAnddownRef.current && accYRef.current) {
+    if (upAndDownRef.current && accYRef.current) {
       // 성공
       setCount(prev => prev + 1);
       upRef.current = false;
       accYRef.current = false;
-      upAnddownRef.current = false;
+      upAndDownRef.current = false;
     }
 
     setTimeout(() => {
       upRef.current = false;
       accYRef.current = false;
-      upAnddownRef.current = false;
-    }, 3000);
+      upAndDownRef.current = false;
+    }, 5000);
   }, []);
 
   function orientationHandler() {
