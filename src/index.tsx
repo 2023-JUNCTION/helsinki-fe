@@ -11,7 +11,7 @@ import Sequence from './pages/Sequence';
 
 export const routes = [
   { path: '/', name: 'Demo', element: <Demo />, nodeRef: createRef() },
-  { path: '/test', name: 'Demo2', element: <Demo2 />, nodeRef: createRef() },
+  // { path: '/test', name: 'Demo2', element: <Demo2 />, nodeRef: createRef() },
   { path: '/sequence', name: 'Sequence', element: <Sequence />, nodeRef: createRef() },
 ];
 
