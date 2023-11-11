@@ -11,13 +11,11 @@ const Demo = () => {
   // const [orientGranted, setOrientGranted] = useState(false);
 
   const upRef = useRef(false);
-  const accYRef = useRef(false);
+  const accRef = useRef(false);
   const upAndDownRef = useRef(false);
 
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
-
-  const [result, setResult] = useState('');
   // const [beta, setBeta] = useState(0);
 
   const motionHandler = useCallback((event: DeviceMotionEvent) => {
@@ -25,7 +23,12 @@ const Demo = () => {
     const accGravity = event.accelerationIncludingGravity;
     const acc = event.acceleration;
 
+    const accX = acc?.x ?? 0;
     const accY = acc?.y ?? 0;
+    const accZ = acc?.z ?? 0;
+
+    // eslint-disable-next-line no-shadow
+    const totalAcc = [accX, accY, accZ].reduce((acc, cur) => acc + Math.abs(cur), 0);
     const accGravityY = accGravity?.y ?? 0;
 
     setYg(accGravityY);
@@ -34,27 +37,25 @@ const Demo = () => {
       upRef.current = true;
     }
 
-    if (Number(accY) > 3) {
-      accYRef.current = true;
-      setResult(prevState => `${prevState} accY => ${accY}`);
+    if (Number(totalAcc) > 3) {
+      accRef.current = true;
     }
 
     if (Number(accGravityY) > 5 && upRef.current) {
       upAndDownRef.current = true;
-      setResult(prevState => `${prevState} upAndDownRef.current => ${upAndDownRef.current}`);
     }
 
-    if (upAndDownRef.current && accYRef.current) {
+    if (upAndDownRef.current && accRef.current) {
       // 성공
       setCount(prev => prev + 1);
       upRef.current = false;
-      accYRef.current = false;
+      accRef.current = false;
       upAndDownRef.current = false;
     }
 
     setTimeout(() => {
       upRef.current = false;
-      accYRef.current = false;
+      accRef.current = false;
       upAndDownRef.current = false;
     }, 10000);
   }, []);
@@ -151,8 +152,6 @@ const Demo = () => {
         yg: {yg}
         <br />
         count: {count}
-        <br />
-        result: {result}
       </div>
     </div>
   );
