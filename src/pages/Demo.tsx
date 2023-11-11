@@ -1,15 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { API } from '~/api';
 
 const Demo = () => {
   const [step, setStep] = useState<number>(0);
   const [granted, setGranted] = useState(false);
 
-  const flag = useRef(false);
-  const yg = useRef(0);
+  const [flag, setFlag] = useState(false);
+  const [yg, setYg] = useState(0);
 
   useEffect(() => {
     (async () => {
@@ -38,17 +38,17 @@ const Demo = () => {
   async function onClick() {
     function motionHandler(event: { accelerationIncludingGravity: any }) {
       const accGravity = event.accelerationIncludingGravity;
-      yg.current = accGravity.y;
+      setYg(accGravity.y);
       return false;
     }
     function orientationHandler(event: { beta: any }) {
-      if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
-        flag.current = true;
+      if (yg - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
+        setFlag(true);
       }
-      if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) < -1) {
-        if (flag.current === true) {
+      if (yg - 10 * Math.sin((event.beta * Math.PI) / 180) < -1) {
+        if (flag === true) {
           setStep(prev => prev + 1);
-          flag.current = false;
+          setFlag(false);
         }
       }
     }
@@ -97,9 +97,13 @@ const Demo = () => {
       >
         <button type="button" onClick={onClick}>
           권한 획득{granted ? 'yes' : 'no'}
-          <br />
-          step: {step}
         </button>
+        <br />
+        step: {step}
+        <br />
+        flag: {flag ? 'yes' : 'no'}
+        <br />
+        yg: {yg}
       </div>
     </div>
   );
