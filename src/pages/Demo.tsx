@@ -9,29 +9,25 @@ const Demo = () => {
   const [granted, setGranted] = useState(false);
   // const [orientGranted, setOrientGranted] = useState(false);
 
-  const [flag] = useState(false);
   const flagRef = useRef(false);
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
 
-  const motionHandler = useCallback(
-    (event: { accelerationIncludingGravity: any }) => {
-      setGranted(true);
-      const accGravity = event.accelerationIncludingGravity;
-      setYg(accGravity.y);
-      if (Number(accGravity.y) > 8 && !flagRef.current) {
-        setCount(prev => prev - 1);
-        flagRef.current = true;
-      }
-      if (Number(accGravity.y) < -8 && flagRef.current) {
-        setCount(prev => prev + 1);
-        flagRef.current = false;
-        setStep(prev => prev + 1);
-      }
-    },
-    [flag],
-  );
+  const motionHandler = useCallback((event: { accelerationIncludingGravity: any }) => {
+    setGranted(true);
+    const accGravity = event.accelerationIncludingGravity;
+    setYg(accGravity.y);
+    if (Number(accGravity.y) > 8 && !flagRef.current) {
+      setCount(prev => prev - 1);
+      flagRef.current = true;
+    }
+    if (Number(accGravity.y) < -8 && flagRef.current) {
+      setCount(prev => prev + 1);
+      flagRef.current = false;
+      setStep(prev => prev + 1);
+    }
+  }, []);
 
   function orientationHandler() {
     // event: { beta: any }) {
@@ -121,8 +117,6 @@ const Demo = () => {
         </button>
         <br />
         step: {step}
-        <br />
-        flag: {flag ? 'yes' : 'no'}
         <br />
         yg: {yg}
         <br />
