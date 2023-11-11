@@ -28,7 +28,7 @@ const Demo = () => {
 
     setYg(accGravityY);
 
-    if (Number(accGravityY) < -6 && !upRef.current) {
+    if (Number(accGravityY) < -5 && !upRef.current) {
       upRef.current = true;
     }
 
@@ -36,7 +36,7 @@ const Demo = () => {
       accYRef.current = true;
     }
 
-    if (Number(accGravityY) > 6 && upRef.current) {
+    if (Number(accGravityY) > 5 && upRef.current) {
       upAndDownRef.current = true;
     }
 
@@ -148,9 +148,9 @@ const Demo = () => {
         <br />
         count: {count}
         <br />
-        upAndDownRef.current: {upAndDownRef.current}
+        up&down: {upAndDownRef.current}
         <br />
-        accYRef.current: {accYRef.current}
+        acc: {accYRef.current}
       </div>
     </div>
   );
