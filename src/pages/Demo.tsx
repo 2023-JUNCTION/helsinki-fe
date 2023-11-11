@@ -26,7 +26,6 @@ const Demo = () => {
         setFlag(false);
       }
     }
-    return false;
   }
   function orientationHandler() {
     // event: { beta: any }) {
