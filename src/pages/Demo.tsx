@@ -16,6 +16,7 @@ const Demo = () => {
 
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
+  const [totalAcc, setTotalAcc] = useState(0);
   // const [beta, setBeta] = useState(0);
 
   const motionHandler = useCallback((event: DeviceMotionEvent) => {
@@ -29,16 +30,13 @@ const Demo = () => {
 
     // eslint-disable-next-line no-shadow
     const totalAcc = [accX, accY, accZ].reduce((acc, cur) => acc + Math.abs(cur), 0);
+    setTotalAcc(totalAcc);
     const accGravityY = accGravity?.y ?? 0;
 
     setYg(accGravityY);
 
     if (Number(accGravityY) < -6 && !upRef.current) {
       upRef.current = true;
-      // setTimeout(() => {
-      //   upRef.current = false;
-      //   accRef.current = false;
-      // }, 5000);
     }
 
     if (Number(totalAcc) > 3) {
@@ -145,6 +143,8 @@ const Demo = () => {
         yg: {yg}
         <br />
         count: {count}
+        <br />
+        totalAcc: {totalAcc}
       </div>
     </div>
   );
