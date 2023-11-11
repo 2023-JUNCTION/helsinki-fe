@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import CanvasImageSequence from 'react-canvas-image-sequence';
 import { API } from '~/api';
 
 const Demo = () => {
-  const [, setStep] = useState<number>(0);
-  const flag = useRef(false);
+  // const [, setStep] = useState<number>(0);
+  // const flag = useRef(false);
   const yg = useRef(0);
 
   useEffect(() => {
@@ -20,17 +20,17 @@ const Demo = () => {
       yg.current = accGravity.y;
       return false;
     }
-    function orientationHandler(event: { beta: any }) {
-      if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
-        flag.current = true;
-      }
-      if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) < -1) {
-        if (flag.current === true) {
-          setStep(prev => prev + 1);
-          flag.current = false;
-        }
-      }
-    }
+    // function orientationHandler(event: { beta: any }) {
+    //   if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
+    //     flag.current = true;
+    //   }
+    //   if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) < -1) {
+    //     if (flag.current === true) {
+    //       setStep(prev => prev + 1);
+    //       flag.current = false;
+    //     }
+    //   }
+    // }
 
     if (typeof (DeviceMotionEvent as any).requestPermission === 'function') {
       (DeviceMotionEvent as any).requestPermission().then((permissionState: any) => {
@@ -42,10 +42,13 @@ const Demo = () => {
       // handle regular non iOS 13+ devices
     }
 
-    if (window.DeviceMotionEvent && window.DeviceOrientationEvent) {
-      window.addEventListener('devicemotion', motionHandler, true);
-      window.addEventListener('deviceorientation', orientationHandler, true);
-    }
+    (DeviceMotionEvent as any).requestPermission().then((permissionState: any) => {
+      if (permissionState === 'granted') {
+        window.addEventListener('devicemotion', motionHandler, true);
+      }
+    });
+    // window.addEventListener('devicemotion', motionHandler, true);
+    // window.addEventListener('deviceorientation', orientationHandler, true);
   }, []);
 
   async function onClick() {
