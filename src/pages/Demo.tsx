@@ -39,9 +39,10 @@ const Demo = () => {
       }
     }
 
-    if (typeof window.DeviceMotionEvent.requestPermission === 'function') {
-      window.DeviceMotionEvent.requestPermission()
-        .then(permissionState => {
+    if (typeof (DeviceMotionEvent as any).requestPermission === 'function') {
+      (DeviceMotionEvent as any)
+        .requestPermission()
+        .then((permissionState: any) => {
           alert(`a${permissionState}`);
           if (permissionState === 'granted') {
             window.addEventListener('devicemotion', () => {});
@@ -59,41 +60,41 @@ const Demo = () => {
     }
   }, []);
 
-  async function onClick() {
-    alert('asdf');
-    await window.DeviceMotionEvent.requestPermission()
-      .then(permissionState => {
-        alert(`AAA${permissionState}`);
-        if (permissionState === 'granted') {
-          window.addEventListener('devicemotion', () => {});
-        }
-      })
-      .catch(console.error);
+  // async function onClick() {
+  //   alert('asdf');
+  //   await window.DeviceMotionEvent.requestPermission()
+  //     .then(permissionState => {
+  //       alert(`AAA${permissionState}`);
+  //       if (permissionState === 'granted') {
+  //         window.addEventListener('devicemotion', () => {});
+  //       }
+  //     })
+  //     .catch(console.error);
 
-    // feature detect
-    if (typeof DeviceMotionEvent.requestPermission === 'function') {
-      DeviceMotionEvent.requestPermission()
-        .then(permissionState => {
-          if (permissionState === 'granted') {
-            window.addEventListener('devicemotion', () => {});
-          }
-        })
-        .catch(console.error);
-    } else {
-      // handle regular non iOS 13+ devices
-    }
-    if (typeof DeviceOrientationEvent.requestPermission === 'function') {
-      DeviceOrientationEvent.requestPermission()
-        .then(permissionState => {
-          if (permissionState === 'granted') {
-            window.addEventListener('deviceorientation', () => {});
-          }
-        })
-        .catch(console.error);
-    } else {
-      // handle regular non iOS 13+ devices
-    }
-  }
+  //   // feature detect
+  //   if (typeof DeviceMotionEvent.requestPermission === 'function') {
+  //     DeviceMotionEvent.requestPermission()
+  //       .then(permissionState => {
+  //         if (permissionState === 'granted') {
+  //           window.addEventListener('devicemotion', () => {});
+  //         }
+  //       })
+  //       .catch(console.error);
+  //   } else {
+  //     // handle regular non iOS 13+ devices
+  //   }
+  //   if (typeof DeviceOrientationEvent.requestPermission === 'function') {
+  //     DeviceOrientationEvent.requestPermission()
+  //       .then(permissionState => {
+  //         if (permissionState === 'granted') {
+  //           window.addEventListener('deviceorientation', () => {});
+  //         }
+  //       })
+  //       .catch(console.error);
+  //   } else {
+  //     // handle regular non iOS 13+ devices
+  //   }
+  // }
   return (
     <div
       style={{
@@ -132,10 +133,10 @@ const Demo = () => {
         width={200}
         data={['/huawei_black.png', '/huawei_khaki.png', '/huawei.pink.png']}
       />
-      <div>{step}aaa</div>
-      <button type="button" onClick={onClick}>
+      {/* <div>{step}aaa</div> */}
+      {/* <button type="button" onClick={onClick}>
         sdfdsf
-      </button>
+      </button> */}
     </div>
   );
 };
