@@ -37,6 +37,12 @@ const Demo = () => {
 
     if (Number(accGravityY) < -6 && !upRef.current) {
       upRef.current = true;
+
+      setTimeout(() => {
+        upRef.current = false;
+        accRef.current = false;
+        upAndDownRef.current = false;
+      }, 5000);
     }
 
     if (Number(totalAcc) > 3) {
@@ -51,12 +57,6 @@ const Demo = () => {
       accRef.current = false;
       upAndDownRef.current = false;
     }
-
-    setTimeout(() => {
-      upRef.current = false;
-      accRef.current = false;
-      upAndDownRef.current = false;
-    }, 5000);
   }, []);
 
   function orientationHandler() {
