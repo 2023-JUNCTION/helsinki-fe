@@ -17,10 +17,10 @@ const Demo = () => {
     setGranted(true);
     const accGravity = event.accelerationIncludingGravity;
     setYg(accGravity.y);
-    if (yg < -8) {
+    if (accGravity.y < -8) {
       setFlag(true);
     }
-    if (yg > 8) {
+    if (accGravity.y > 8) {
       if (flag === true) {
         setStep(prev => prev + 1);
         setFlag(false);
