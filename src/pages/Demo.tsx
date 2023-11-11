@@ -1,36 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import CanvasImageSequence from 'react-canvas-image-sequence';
 import { API } from '~/api';
 
 const Demo = () => {
-  // const [, setStep] = useState<number>(0);
-  // const flag = useRef(false);
-  // const yg = useRef(0);
+  const [, setStep] = useState<number>(0);
+  const [granted, setGranted] = useState(false);
+
+  const flag = useRef(false);
+  const yg = useRef(0);
 
   useEffect(() => {
     (async () => {
       await API.Test.readHealthCheck();
     })();
-
-    // function motionHandler(event: { accelerationIncludingGravity: any }) {
-    //   const accGravity = event.accelerationIncludingGravity;
-    //   yg.current = accGravity.y;
-    //   return false;
-    // }
-    // function orientationHandler(event: { beta: any }) {
-    //   if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
-    //     flag.current = true;
-    //   }
-    //   if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) < -1) {
-    //     if (flag.current === true) {
-    //       setStep(prev => prev + 1);
-    //       flag.current = false;
-    //     }
-    //   }
-    // }
 
     if (typeof (window as any).DeviceMotionEvent.requestPermission === 'function') {
       (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
@@ -52,12 +37,37 @@ const Demo = () => {
   }, []);
 
   async function onClick() {
+    function motionHandler(event: { accelerationIncludingGravity: any }) {
+      const accGravity = event.accelerationIncludingGravity;
+      yg.current = accGravity.y;
+      return false;
+    }
+    function orientationHandler(event: { beta: any }) {
+      if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
+        flag.current = true;
+      }
+      if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) < -1) {
+        if (flag.current === true) {
+          setStep(prev => prev + 1);
+          flag.current = false;
+        }
+      }
+    }
+
     await (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
       if (permissionState === 'granted') {
-        window.addEventListener('devicemotion', () => {});
+        setGranted(true);
+        window.addEventListener('devicemotion', motionHandler, true);
+      }
+    });
+    await (window as any).DeviceMotionEvent.DeviceOrientationEvent().then((permissionState: any) => {
+      if (permissionState === 'granted') {
+        setGranted(true);
+        window.addEventListener('deviceorientation', orientationHandler, true);
       }
     });
   }
+
   return (
     <div
       style={{
@@ -87,8 +97,8 @@ const Demo = () => {
         }}
       >
         <button type="button" onClick={onClick}>
-          sdfdsf
-        </button>{' '}
+          권한 획득{granted ? 'yes' : 'no'}
+        </button>
       </div>
       <CanvasImageSequence
         fps={1}
@@ -98,7 +108,6 @@ const Demo = () => {
         width={200}
         data={['/huawei_black.png', '/huawei_khaki.png', '/huawei.pink.png']}
       />
-      {/* <div>{step}aaa</div> */}
     </div>
   );
 };
