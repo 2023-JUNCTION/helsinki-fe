@@ -20,10 +20,10 @@ const Demo = () => {
   }
   function orientationHandler(event: { beta: any }) {
     setOrientGranted(true);
-    if (yg - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
+    if (yg - 5 * Math.sin((event.beta * Math.PI) / 180) > 1) {
       setFlag(true);
     }
-    if (yg - 10 * Math.sin((event.beta * Math.PI) / 180) < -1) {
+    if (yg - 5 * Math.sin((event.beta * Math.PI) / 180) < -1) {
       if (flag === true) {
         setStep(prev => prev + 1);
         setFlag(false);
