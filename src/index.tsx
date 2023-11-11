@@ -7,8 +7,12 @@ import Demo from './pages/Demo';
 
 import styles from './index.module.scss';
 import '~/scss/_reset.scss';
+import Sequence from './pages/Sequence';
 
-export const routes = [{ path: '/', name: 'Demo', element: <Demo />, nodeRef: createRef() }];
+export const routes = [
+  { path: '/', name: 'Demo', element: <Demo />, nodeRef: createRef() },
+  { path: '/', name: 'Sequence', element: <Sequence />, nodeRef: createRef() },
+];
 
 const Root = () => {
   const location = useLocation();

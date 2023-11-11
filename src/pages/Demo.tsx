@@ -2,11 +2,10 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
 import React, { useEffect, useRef, useState } from 'react';
-import CanvasImageSequence from 'react-canvas-image-sequence';
 import { API } from '~/api';
 
 const Demo = () => {
-  const [, setStep] = useState<number>(0);
+  const [step, setStep] = useState<number>(0);
   const [granted, setGranted] = useState(false);
 
   const flag = useRef(false);
@@ -98,16 +97,10 @@ const Demo = () => {
       >
         <button type="button" onClick={onClick}>
           권한 획득{granted ? 'yes' : 'no'}
+          <br />
+          step: {step}
         </button>
       </div>
-      <CanvasImageSequence
-        fps={1}
-        loop
-        autoPlay
-        height={200}
-        width={200}
-        data={['/huawei_black.png', '/huawei_khaki.png', '/huawei.pink.png']}
-      />
     </div>
   );
 };
