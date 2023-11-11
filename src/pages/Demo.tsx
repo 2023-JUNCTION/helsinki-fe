@@ -52,7 +52,7 @@ const Demo = () => {
       upRef.current = false;
       accYRef.current = false;
       upAndDownRef.current = false;
-    }, 5000);
+    }, 10000);
   }, []);
 
   function orientationHandler() {
@@ -147,6 +147,10 @@ const Demo = () => {
         yg: {yg}
         <br />
         count: {count}
+        <br />
+        upAndDownRef.current: {upAndDownRef.current}
+        <br />
+        accYRef.current: {accYRef.current}
       </div>
     </div>
   );
