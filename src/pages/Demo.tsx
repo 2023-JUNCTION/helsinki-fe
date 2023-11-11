@@ -14,6 +14,9 @@ const Demo = () => {
   const accRef = useRef(false);
   const upAndDownRef = useRef(false);
 
+  const [totalAcc, setTotalAcc] = useState(0);
+  const [upAndDown, setUpAndDown] = useState(false);
+
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
@@ -39,10 +42,12 @@ const Demo = () => {
 
     if (Number(totalAcc) > 3) {
       accRef.current = true;
+      setTotalAcc(totalAcc);
     }
 
     if (Number(accGravityY) > 5 && upRef.current) {
       upAndDownRef.current = true;
+      setUpAndDown(true);
     }
 
     if (upAndDownRef.current && accRef.current) {
@@ -152,6 +157,10 @@ const Demo = () => {
         yg: {yg}
         <br />
         count: {count}
+        <br />
+        upAndDown: {upAndDown}
+        <br />
+        totalAcc: {totalAcc}
       </div>
     </div>
   );
