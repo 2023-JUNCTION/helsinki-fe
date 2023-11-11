@@ -33,17 +33,12 @@ const Demo = () => {
     }
 
     if (typeof (DeviceMotionEvent as any).requestPermission === 'function') {
-      (DeviceMotionEvent as any)
-        .requestPermission()
-        .then((permissionState: any) => {
-          alert(`a${permissionState}`);
-          if (permissionState === 'granted') {
-            window.addEventListener('devicemotion', () => {});
-          }
-        })
-        .catch(console.error);
+      (DeviceMotionEvent as any).requestPermission().then((permissionState: any) => {
+        if (permissionState === 'granted') {
+          window.addEventListener('devicemotion', () => {});
+        }
+      });
     } else {
-      alert('b');
       // handle regular non iOS 13+ devices
     }
 
