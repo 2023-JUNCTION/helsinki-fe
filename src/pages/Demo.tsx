@@ -9,7 +9,10 @@ const Demo = () => {
   const [granted, setGranted] = useState(false);
   // const [orientGranted, setOrientGranted] = useState(false);
 
-  const flagRef = useRef(false);
+  const upRef = useRef(false);
+  const parallelRef = useRef(false);
+  const doneRef = useRef(false);
+
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
@@ -18,14 +21,24 @@ const Demo = () => {
     setGranted(true);
     const accGravity = event.accelerationIncludingGravity;
     setYg(accGravity.y);
-    if (Number(accGravity.y) > 8 && !flagRef.current) {
-      setCount(prev => prev - 1);
-      flagRef.current = true;
+
+    if (Number(accGravity.y) > 5 && !upRef.current) {
+      upRef.current = true;
     }
-    if (Number(accGravity.y) < -8 && flagRef.current) {
+
+    if (Math.abs(accGravity.z) > 5 && upRef.current) {
+      parallelRef.current = true;
+    }
+
+    if (Number(accGravity.y) < -5 && upRef.current && parallelRef.current) {
+      doneRef.current = true;
+    }
+
+    if (doneRef.current) { // 성공
       setCount(prev => prev + 1);
-      flagRef.current = false;
-      setStep(prev => prev + 1);
+      upRef.current = false;
+      parallelRef.current = false;
+      doneRef.current = false;
     }
   }, []);
 
@@ -83,46 +96,46 @@ const Demo = () => {
   }
 
   return (
-    <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative',
-      }}
-    >
-      <img src="/huawei_black.png" alt="watch" style={{ width: 'auto', height: '80%' }} />
       <div
-        style={{
-          position: 'absolute',
-          transform: 'translate(-50%, -50%)',
-          width: 'auto',
-          aspectRatio: 0.52,
-          height: '46%',
-          background: 'white',
-          top: '50%',
-          left: 'calc(50% - 3px)',
-          borderRadius: 15,
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
+          style={{
+            width: '100vw',
+            height: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'relative',
+          }}
       >
-        <button type="button" onClick={onClick}>
-          자이로 권한 획득{granted ? 'yes' : 'no'}
+        <img src="/huawei_black.png" alt="watch" style={{ width: 'auto', height: '80%' }} />
+        <div
+            style={{
+              position: 'absolute',
+              transform: 'translate(-50%, -50%)',
+              width: 'auto',
+              aspectRatio: 0.52,
+              height: '46%',
+              background: 'white',
+              top: '50%',
+              left: 'calc(50% - 3px)',
+              borderRadius: 15,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+        >
+          <button type="button" onClick={onClick}>
+            자이로 권한 획득{granted ? 'yes' : 'no'}
+            <br />
+            {/* 회전 권한 획득{orientGranted ? 'yes' : 'no'} */}
+          </button>
           <br />
-          {/* 회전 권한 획득{orientGranted ? 'yes' : 'no'} */}
-        </button>
-        <br />
-        step: {step}
-        <br />
-        yg: {yg}
-        <br />
-        count: {count}
+          step: {step}
+          <br />
+          yg: {yg}
+          <br />
+          count: {count}
+        </div>
       </div>
-    </div>
   );
 };
 
