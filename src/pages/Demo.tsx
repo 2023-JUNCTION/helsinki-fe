@@ -15,7 +15,6 @@ const Demo = () => {
   const upAndDownRef = useRef(false);
 
   const [totalAcc, setTotalAcc] = useState(0);
-  const [upAndDown, setUpAndDown] = useState(false);
 
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
