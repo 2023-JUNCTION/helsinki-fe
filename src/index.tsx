@@ -4,7 +4,6 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { RouterProvider, createBrowserRouter, useLocation, useOutlet } from 'react-router-dom';
 import { Toast } from './components';
 import Demo from './pages/Demo';
-import Demo2 from './pages/Demo2';
 
 import styles from './index.module.scss';
 import '~/scss/_reset.scss';
