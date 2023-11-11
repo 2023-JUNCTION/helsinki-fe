@@ -45,7 +45,6 @@ const Demo = () => {
 
     if (Number(totalAcc) > 3) {
       accRef.current = true;
-      setTotalAcc(totalAcc);
     }
 
     if (upAndDownRef.current && accRef.current) {
