@@ -22,10 +22,10 @@ const Demo = () => {
   function orientationHandler(event: { beta: any }) {
     setOrientGranted(true);
     setBeta(event.beta);
-    if (yg < -9) {
+    if (yg < -8) {
       setFlag(true);
     }
-    if (yg > 9) {
+    if (yg > 8) {
       if (flag === true) {
         setStep(prev => prev + 1);
         setFlag(false);
@@ -56,8 +56,6 @@ const Demo = () => {
     } else {
       // handle regular non iOS 13+ devices
     }
-    // window.addEventListener('devicemotion', motionHandler, true);
-    // window.addEventListener('deviceorientation', orientationHandler, true);
   }, []);
 
   async function onClick() {
