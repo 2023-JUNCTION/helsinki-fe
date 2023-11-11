@@ -18,20 +18,19 @@ const Demo = () => {
   const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
 
-  const motionHandler = useCallback((event: { accelerationIncludingGravity: any }) => {
+
+  const motionHandler = useCallback((event: DeviceMotionEvent) => {
     setGranted(true);
     const accGravity = event.accelerationIncludingGravity;
-    setYg(accGravity.y);
+    const accGravityY = accGravity?.y ?? 0;
 
-    if (Number(accGravity.y) < -6 && !upRef.current) {
+    setYg(accGravityY);
+
+    if (Number(accGravityY) < -6 && !upRef.current) {
       upRef.current = true;
     }
 
-    if (Math.abs(accGravity.z) > 3) {
-      parallelRef.current = true;
-    }
-
-    if (Number(accGravity.y) > 6 && upRef.current && parallelRef.current) {
+    if (Number(accGravityY) > 6 && upRef.current && parallelRef.current) {
       doneRef.current = true;
     }
 
