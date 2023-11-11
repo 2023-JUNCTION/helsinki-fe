@@ -18,6 +18,8 @@ const Demo = () => {
   const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
 
+  const [accXYZ, setAccXYZ] = useState('');
+
   const motionHandler = useCallback((event: DeviceMotionEvent) => {
     setGranted(true);
     const accGravity = event.accelerationIncludingGravity;
@@ -26,6 +28,7 @@ const Demo = () => {
     const accX = acc?.x ?? 0;
     const accY = acc?.y ?? 0;
     const accZ = acc?.z ?? 0;
+    setAccXYZ(`${accX} ${accY} ${accZ}`);
 
     // eslint-disable-next-line no-shadow
     const totalAcc = [accX, accY, accZ].reduce((acc, cur) => acc + Math.abs(cur), 0);
@@ -145,6 +148,8 @@ const Demo = () => {
         yg: {yg}
         <br />
         count: {count}
+        <br />
+        accXYZ: {accXYZ}
       </div>
     </div>
   );
