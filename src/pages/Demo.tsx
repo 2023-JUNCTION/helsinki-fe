@@ -16,6 +16,8 @@ const Demo = () => {
 
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
+
+  const [result, setResult] = useState('');
   // const [beta, setBeta] = useState(0);
 
   const motionHandler = useCallback((event: DeviceMotionEvent) => {
@@ -34,10 +36,12 @@ const Demo = () => {
 
     if (Number(accY) > 3) {
       accYRef.current = true;
+      setResult(prevState => `${prevState} accY => ${accY}`);
     }
 
     if (Number(accGravityY) > 5 && upRef.current) {
       upAndDownRef.current = true;
+      setResult(prevState => `${prevState} upAndDownRef.current => ${upAndDownRef.current}`);
     }
 
     if (upAndDownRef.current && accYRef.current) {
