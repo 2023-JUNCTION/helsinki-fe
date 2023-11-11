@@ -39,7 +39,7 @@ const Demo = () => {
     if (typeof (window as any).DeviceMotionEvent.requestPermission === 'function') {
       (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
         if (permissionState === 'granted') {
-          window.addEventListener('devicemotion', () => {});
+          window.addEventListener('devicemotion', motionHandler);
         }
       });
     } else {
