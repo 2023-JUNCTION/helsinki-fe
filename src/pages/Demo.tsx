@@ -1,25 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import CanvasImageSequence from 'react-canvas-image-sequence';
 import { API } from '~/api';
 
 const Demo = () => {
   // const [, setStep] = useState<number>(0);
   // const flag = useRef(false);
-  const yg = useRef(0);
+  // const yg = useRef(0);
 
   useEffect(() => {
     (async () => {
       await API.Test.readHealthCheck();
     })();
 
-    function motionHandler(event: { accelerationIncludingGravity: any }) {
-      const accGravity = event.accelerationIncludingGravity;
-      yg.current = accGravity.y;
-      return false;
-    }
+    // function motionHandler(event: { accelerationIncludingGravity: any }) {
+    //   const accGravity = event.accelerationIncludingGravity;
+    //   yg.current = accGravity.y;
+    //   return false;
+    // }
     // function orientationHandler(event: { beta: any }) {
     //   if (yg.current - 10 * Math.sin((event.beta * Math.PI) / 180) > 1) {
     //     flag.current = true;
@@ -32,8 +32,8 @@ const Demo = () => {
     //   }
     // }
 
-    if (typeof (DeviceMotionEvent as any).requestPermission === 'function') {
-      (DeviceMotionEvent as any).requestPermission().then((permissionState: any) => {
+    if (typeof (window as any).DeviceMotionEvent.requestPermission === 'function') {
+      (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
         if (permissionState === 'granted') {
           window.addEventListener('devicemotion', () => {});
         }
@@ -42,17 +42,17 @@ const Demo = () => {
       // handle regular non iOS 13+ devices
     }
 
-    (DeviceMotionEvent as any).requestPermission().then((permissionState: any) => {
-      if (permissionState === 'granted') {
-        window.addEventListener('devicemotion', motionHandler, true);
-      }
-    });
+    // (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
+    //   if (permissionState === 'granted') {
+    //     window.addEventListener('devicemotion', motionHandler, true);
+    //   }
+    // });
     // window.addEventListener('devicemotion', motionHandler, true);
     // window.addEventListener('deviceorientation', orientationHandler, true);
   }, []);
 
   async function onClick() {
-    await (DeviceMotionEvent as any).requestPermission().then((permissionState: any) => {
+    await (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
       if (permissionState === 'granted') {
         window.addEventListener('devicemotion', () => {});
       }
@@ -86,7 +86,9 @@ const Demo = () => {
           alignItems: 'center',
         }}
       >
-        demo
+        <button type="button" onClick={onClick}>
+          sdfdsf
+        </button>{' '}
       </div>
       <CanvasImageSequence
         fps={1}
@@ -97,9 +99,6 @@ const Demo = () => {
         data={['/huawei_black.png', '/huawei_khaki.png', '/huawei.pink.png']}
       />
       {/* <div>{step}aaa</div> */}
-      <button type="button" onClick={onClick}>
-        sdfdsf
-      </button>
     </div>
   );
 };
