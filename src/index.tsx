@@ -4,11 +4,17 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { RouterProvider, createBrowserRouter, useLocation, useOutlet } from 'react-router-dom';
 import { Toast } from './components';
 import Demo from './pages/Demo';
+import Demo2 from './pages/Demo2';
 
 import styles from './index.module.scss';
 import '~/scss/_reset.scss';
+import Sequence from './pages/Sequence';
 
-export const routes = [{ path: '/', name: 'Demo', element: <Demo />, nodeRef: createRef() }];
+export const routes = [
+  { path: '/', name: 'Demo', element: <Demo />, nodeRef: createRef() },
+  { path: '/test', name: 'Demo2', element: <Demo2 />, nodeRef: createRef() },
+  { path: '/sequence', name: 'Sequence', element: <Sequence />, nodeRef: createRef() },
+];
 
 const Root = () => {
   const location = useLocation();

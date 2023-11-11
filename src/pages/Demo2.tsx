@@ -11,49 +11,36 @@ const Demo = () => {
   // const [orientGranted, setOrientGranted] = useState(false);
 
   const upRef = useRef(false);
-  const accRef = useRef(false);
-  const lockRef = useRef(false);
+  const parallelRef = useRef(false);
+  const doneRef = useRef(false);
 
   const [yg, setYg] = useState(0);
   const [count, setCount] = useState(0);
-  const [totalAcc, setTotalAcc] = useState(0);
-
   // const [beta, setBeta] = useState(0);
 
-  const motionHandler = useCallback((event: DeviceMotionEvent) => {
+  const motionHandler = useCallback((event: { accelerationIncludingGravity: any }) => {
     setGranted(true);
     const accGravity = event.accelerationIncludingGravity;
-    const acc = event.acceleration;
+    setYg(accGravity.y);
 
-    const accX = acc?.x ?? 0;
-    const accY = acc?.y ?? 0;
-    const accZ = acc?.z ?? 0;
-
-    // eslint-disable-next-line no-shadow
-    const totalAcc = [accX, accY, accZ].reduce((acc, cur) => acc + Math.abs(cur), 0);
-    setTotalAcc(totalAcc);
-    const accGravityY = accGravity?.y ?? 0;
-
-    setYg(accGravityY);
-
-    if (Number(accGravityY) > 5 && !upRef.current) {
+    if (Number(accGravity.y) > 5 && !upRef.current) {
       upRef.current = true;
     }
 
-    if (Number(totalAcc) > 20) {
-      accRef.current = true;
+    if (Math.abs(accGravity.z) > 5 && upRef.current) {
+      parallelRef.current = true;
     }
 
-    if (upRef.current && accRef.current && lockRef.current === false) {
+    if (Number(accGravity.y) < -5 && upRef.current && parallelRef.current) {
+      doneRef.current = true;
+    }
+
+    if (doneRef.current) {
       // 성공
       setCount(prev => prev + 1);
-      lockRef.current = true;
       upRef.current = false;
-      accRef.current = false;
-
-      setTimeout(() => {
-        lockRef.current = false;
-      }, 3000);
+      parallelRef.current = false;
+      doneRef.current = false;
     }
   }, []);
 
@@ -149,8 +136,6 @@ const Demo = () => {
         yg: {yg}
         <br />
         count: {count}
-        <br />
-        totalAcc: {totalAcc}
       </div>
     </div>
   );
