@@ -39,7 +39,6 @@ const Demo = () => {
       setTimeout(() => {
         upRef.current = false;
         accRef.current = false;
-        upAndDownRef.current = false;
       }, 5000);
     }
 
@@ -52,7 +51,6 @@ const Demo = () => {
       setCount(prev => prev + 1);
       upRef.current = false;
       accRef.current = false;
-      upAndDownRef.current = false;
     }
   }, []);
 
