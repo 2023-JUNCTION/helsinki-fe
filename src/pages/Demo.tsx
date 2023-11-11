@@ -11,6 +11,7 @@ const Demo = () => {
 
   const [flag, setFlag] = useState(false);
   const [yg, setYg] = useState(0);
+  const [beta, setBeta] = useState(0);
 
   function motionHandler(event: { accelerationIncludingGravity: any }) {
     setGranted(true);
@@ -20,10 +21,11 @@ const Demo = () => {
   }
   function orientationHandler(event: { beta: any }) {
     setOrientGranted(true);
-    if (yg - 5 * Math.sin((event.beta * Math.PI) / 180) > 1) {
+    setBeta(event.beta);
+    if (yg < -9) {
       setFlag(true);
     }
-    if (yg - 5 * Math.sin((event.beta * Math.PI) / 180) < -1) {
+    if (yg > 9) {
       if (flag === true) {
         setStep(prev => prev + 1);
         setFlag(false);
@@ -110,6 +112,8 @@ const Demo = () => {
         flag: {flag ? 'yes' : 'no'}
         <br />
         yg: {yg}
+        <br />
+        beta: {beta}
       </div>
     </div>
   );
