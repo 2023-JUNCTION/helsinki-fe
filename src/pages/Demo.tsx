@@ -35,7 +35,7 @@ const Demo = () => {
 
     setYg(accGravityY);
 
-    if (Number(accGravityY) < -6 && !upRef.current) {
+    if (Number(accGravityY) > 10 && !upRef.current) {
       upRef.current = true;
     }
 
