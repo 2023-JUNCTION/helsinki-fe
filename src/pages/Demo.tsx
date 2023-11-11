@@ -1,114 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { API } from '~/api';
+import React from 'react';
+import { useDeviceMotion } from '../hooks';
 
 const Demo = () => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [step, setStep] = useState<number>(0);
-  const [granted, setGranted] = useState(false);
-  // const [orientGranted, setOrientGranted] = useState(false);
-
-  const upRef = useRef(false);
-  const accRef = useRef(false);
-  const lockRef = useRef(false);
-
-  const [yg, setYg] = useState(0);
-  const [count, setCount] = useState(0);
-  const [totalAcc, setTotalAcc] = useState(0);
-
-  // const [beta, setBeta] = useState(0);
-
-  const motionHandler = useCallback((event: DeviceMotionEvent) => {
-    setGranted(true);
-    const accGravity = event.accelerationIncludingGravity;
-    const acc = event.acceleration;
-
-    const accX = acc?.x ?? 0;
-    const accY = acc?.y ?? 0;
-    const accZ = acc?.z ?? 0;
-
-    // eslint-disable-next-line no-shadow
-    const totalAcc = [accX, accY, accZ].reduce((acc, cur) => acc + Math.abs(cur), 0);
-    setTotalAcc(totalAcc);
-    const accGravityY = accGravity?.y ?? 0;
-
-    setYg(accGravityY);
-
-    if (Number(accGravityY) > 5 && !upRef.current) {
-      upRef.current = true;
-    }
-
-    if (Number(totalAcc) > 20) {
-      accRef.current = true;
-    }
-
-    if (upRef.current && accRef.current && lockRef.current === false) {
-      // 성공
-      setCount(prev => prev + 1);
-      lockRef.current = true;
-      upRef.current = false;
-      accRef.current = false;
-
-      setTimeout(() => {
-        lockRef.current = false;
-      }, 3000);
-    }
-  }, []);
-
-  function orientationHandler() {
-    // event: { beta: any }) {
-    // setOrientGranted(true);
-    // setBeta(event.beta);
-    // if (yg < -8) {
-    //   setFlag(true);
-    // }
-    // if (yg > 8) {
-    //   if (flag === true) {
-    //     setStep(prev => prev + 1);
-    //     setFlag(false);
-    //   }
-    // }
-  }
-
-  useEffect(() => {
-    (async () => {
-      await API.Test.readHealthCheck();
-    })();
-
-    if (typeof (window as any).DeviceMotionEvent.requestPermission === 'function') {
-      (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
-        if (permissionState === 'granted') {
-          window.addEventListener('devicemotion', motionHandler);
-        }
-      });
-    } else {
-      // handle regular non iOS 13+ devices
-    }
-    if (typeof (window as any).DeviceOrientationEvent.requestPermission === 'function') {
-      (window as any).DeviceOrientationEvent.requestPermission().then((permissionState: any) => {
-        if (permissionState === 'granted') {
-          window.addEventListener('deviceorientation', orientationHandler);
-        }
-      });
-    } else {
-      // handle regular non iOS 13+ devices
-    }
-  }, []);
-
-  async function onClick() {
-    await (window as any).DeviceMotionEvent.requestPermission().then((permissionState: any) => {
-      if (permissionState === 'granted') {
-        window.addEventListener('devicemotion', motionHandler);
-      }
-    });
-    await (window as any).DeviceOrientationEvent.requestPermission().then((permissionState: any) => {
-      if (permissionState === 'granted') {
-        window.addEventListener('deviceorientation', orientationHandler);
-      }
-    });
-  }
+  const { step, jumpingJackCount } = useDeviceMotion();
 
   return (
     <div
@@ -138,19 +32,9 @@ const Demo = () => {
           alignItems: 'center',
         }}
       >
-        <button type="button" onClick={onClick}>
-          자이로 권한 획득{granted ? 'yes' : 'no'}
-          <br />
-          {/* 회전 권한 획득{orientGranted ? 'yes' : 'no'} */}
-        </button>
+        {step}
         <br />
-        step: {step}
-        <br />
-        yg: {yg}
-        <br />
-        count: {count}
-        <br />
-        totalAcc: {totalAcc}
+        {jumpingJackCount}
       </div>
     </div>
   );
