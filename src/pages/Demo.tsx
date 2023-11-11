@@ -36,18 +36,13 @@ const Demo = () => {
 
     setYg(accGravityY);
 
-    if (Number(accGravityY) < -5 && !upRef.current) {
+    if (Number(accGravityY) < -6 && !upRef.current) {
       upRef.current = true;
     }
 
     if (Number(totalAcc) > 3) {
       accRef.current = true;
       setTotalAcc(totalAcc);
-    }
-
-    if (Number(accGravityY) > 5 && upRef.current) {
-      upAndDownRef.current = true;
-      setUpAndDown(true);
     }
 
     if (upAndDownRef.current && accRef.current) {
@@ -62,7 +57,7 @@ const Demo = () => {
       upRef.current = false;
       accRef.current = false;
       upAndDownRef.current = false;
-    }, 10000);
+    }, 5000);
   }, []);
 
   function orientationHandler() {
