@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { API } from '~/api';
 
 const Demo = () => {
@@ -11,25 +11,27 @@ const Demo = () => {
 
   const [flag, setFlag] = useState(false);
   const [yg, setYg] = useState(0);
+  const [count, setCount] = useState(0);
   // const [beta, setBeta] = useState(0);
 
-  function motionHandler(event: { accelerationIncludingGravity: any }) {
-    setGranted(true);
-    const accGravity = event.accelerationIncludingGravity;
-    setYg(accGravity.y);
-    if (Number(accGravity.y) < -8) {
-      setFlag(true);
-    }
-    if (Number(accGravity.y) > 0) {
-      if (flag === true) {
+  const motionHandler = useCallback(
+    (event: { accelerationIncludingGravity: any }) => {
+      setGranted(true);
+      const accGravity = event.accelerationIncludingGravity;
+      setYg(accGravity.y);
+      if (Number(accGravity.y) > 8 && !flag) {
+        setCount(prev => prev - 1);
+        setFlag(true);
+      }
+      if (Number(accGravity.y) < -8 && flag) {
+        setCount(prev => prev + 1);
         setFlag(false);
         setStep(prev => prev + 1);
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        alert('test', flag, yg, step);
       }
-    }
-  }
+    },
+    [flag],
+  );
+
   function orientationHandler() {
     // event: { beta: any }) {
     // setOrientGranted(true);
@@ -123,7 +125,7 @@ const Demo = () => {
         <br />
         yg: {yg}
         <br />
-        {/* beta: {beta} */}
+        count: {count}
       </div>
     </div>
   );
