@@ -34,7 +34,7 @@ const Detail = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleClickEmoji = (isTeass: boolean = false) => {
+  const handleClickEmoji = (isTeass: boolean = true) => {
     if (!isTeass) {
       setIsModalOpen(true);
     } else {
@@ -60,8 +60,8 @@ const Detail = () => {
     <div className={cn(styles.container, isTeasing && styles.teasing)}>
       <Modal isOpen={isOpen}>
         <div>
-          <div className={styles.modal_title}>Mission has been sent!</div>
-          <Button onClick={() => setIsOpen(false)}>OK</Button>
+          <div className={styles.modal_title}>The tease has been delivered!</div>
+          <Button onClick={() => navigate(-1)}>OK</Button>
         </div>
       </Modal>
       <button className={styles.back_button} type="button" onClick={onClick}>
@@ -118,7 +118,6 @@ const Detail = () => {
         <div className={styles.modal_title}>Mission has been sent!</div>
         <Button labelText="OK" onClick={() => navigate(-1)} />
       </Modal>
-
       <Modal isOpen={!!isOpenGointOutModal}>
         {isOpenGointOutModal === 1 && (
           <>

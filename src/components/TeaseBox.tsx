@@ -18,8 +18,6 @@ const TeaseBox = ({ isOpen, onClick }: Props) => {
     }
   }, [isOpen]);
 
-  // const onClicka = () => setIsActive(false);
-
   return (
     <div className={cn(styles.container, isActive && styles.is_show)}>
       <div className={styles.title}>Tease!</div>
@@ -40,8 +38,8 @@ const TeaseBox = ({ isOpen, onClick }: Props) => {
       <div className={styles.title}>Give Jenny a mission to move!</div>
 
       <div className={styles.button_group}>
-        <Button isBlack labelText="Walk 12 minutes" onClick={() => onClick(true)} />
-        <Button isBlack labelText="Do ten jumping jacks" onClick={() => onClick(true)} />
+        <Button isBlack labelText="Walk 12 minutes" onClick={() => onClick(false)} />
+        <Button isBlack labelText="Do ten jumping jacks" onClick={() => onClick(false)} />
         <Button isBlack labelText="Type to give a mission" disabled />
       </div>
     </div>
