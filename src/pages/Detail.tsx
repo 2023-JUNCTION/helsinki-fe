@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 // import { Button } from '~/components';
 // import TeaseBox from '~/components/TeaseBox';
+import { useNavigate } from 'react-router-dom';
 import TeaseAttackBox from '~/components/TeaseAttackBox';
 
 import Character from '~/components/Character';
@@ -14,17 +15,21 @@ type Props = {
 };
 
 const Detail = ({ isTeasing = true }: Props) => {
+  const navigate = useNavigate();
+
   const nickName = 'lay';
+
+  const onClick = () => navigate(-1);
   return (
     <div className={cn(styles.container, isTeasing && styles.teasing)}>
-      <button className={styles.back_button} type="button" onClick={() => console.log()}>
+      <button className={styles.back_button} type="button" onClick={onClick}>
         <img src="/back_button.png" alt="back_button" />
       </button>
-      <button className={styles.message_button} type="button" onClick={() => console.log()}>
+      <button className={styles.message_button} type="button" onClick={onClick}>
         <img src="/message.png" alt="back_button" />
       </button>
-      <div className={styles.nickname}>{nickName}</div>
-      <div className={styles.working}>
+      <div className={cn(styles.nickname, isTeasing && styles.teasing)}>{nickName}</div>
+      <div className={cn(styles.working, isTeasing && styles.teasing)}>
         is <b>Dancing</b> <br />
         for 10 min
       </div>

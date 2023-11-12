@@ -5,7 +5,6 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { RouterProvider, createBrowserRouter, useLocation, useOutlet } from 'react-router-dom';
 import Detail from '~/pages/Detail';
 import { Toast } from './components';
-import Demo from './pages/Demo';
 import Map from './pages/Map';
 import Mission from './pages/Mission';
 
@@ -15,8 +14,7 @@ import User from "~/api/transports/User";
 import Modal from "~/components/common/Modal";
 
 export const routes = [
-  { path: '/', name: 'Demo', element: <Demo />, nodeRef: createRef() },
-  { path: '/map', name: 'Demo2', element: <Map />, nodeRef: createRef() },
+    { path: '/', name: 'Map', element: <Map />, nodeRef: createRef() },
   { path: '/mission', name: 'Mission', element: <Mission />, nodeRef: createRef() },
   { path: '/detail', name: 'Detail', element: <Detail />, nodeRef: createRef() },
 ];
