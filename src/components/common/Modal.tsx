@@ -8,7 +8,7 @@ import styles from './Modal.module.scss';
 
 type Props = {
   children: ReactNode;
-  handleCloseModal: () => void;
+  handleCloseModal?: () => void;
   closeOnClickOverlay?: boolean;
   closeOnEsc?: boolean;
   isOpen: boolean;
@@ -27,7 +27,7 @@ const Modal = ({ children, handleCloseModal, closeOnClickOverlay = true, closeOn
       scheduledAnimationFrame = true;
 
       if (key === 'Escape') {
-        handleCloseModal();
+        handleCloseModal?.();
         scheduledAnimationFrame = false;
       }
     };
@@ -55,7 +55,7 @@ const Modal = ({ children, handleCloseModal, closeOnClickOverlay = true, closeOn
           className={styles.modal}
           onClick={e => {
             if (e.target === e.currentTarget && closeOnClickOverlay) {
-              handleCloseModal();
+              handleCloseModal?.();
             }
           }}
         >

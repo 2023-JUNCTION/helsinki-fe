@@ -24,10 +24,11 @@ const Root = () => {
   const [fetching, setFetching] = useState(false);
   const currentOutlet = useOutlet();
   const { nodeRef } = routes.find(route => route.path === location.pathname) as { nodeRef: RefObject<HTMLDivElement> };
+  const [isOpen, setIsOpen] = useState(!localStorage.getItem('userId'))
 
-  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number }>({
-    latitude: 0,
-    longitude: 0,
+  const [userLocation, setUserLocation] = useState<{ latitude?: number; longitude?: number }>({
+    latitude: undefined,
+    longitude: undefined,
   });
 
   const getUserLocation = () => {
@@ -63,14 +64,18 @@ const Root = () => {
   }, []);
 
   useEffect(() => {
-    if (!userLocation || !userLocation.latitude || !userLocation.longitude) {
+    console.log(userLocation, 'a', localStorage.getItem('userId'));
+    console.log(fetching)
+
+    if (!userLocation || userLocation.latitude === undefined || userLocation.longitude === undefined) {
       return
     }
 
     if (localStorage.getItem('userId') != null) {
+      setIsOpen(false);
       return
     }
-
+      
     if (fetching) {
       return
     }
@@ -78,9 +83,10 @@ const Root = () => {
     // 게스트 가입/로그인
     (async () => {
       setFetching(true)
-      const response = await User.createUser(userLocation.latitude, userLocation.longitude);
+      const response = await User.createUser(userLocation.latitude ?? 0, userLocation.longitude ?? 0);
       localStorage.setItem('userId', String(response.id));
       setFetching(false)
+      setIsOpen(false);
     })();
   }, [userLocation]);
 
@@ -108,8 +114,7 @@ const Root = () => {
         </CSSTransition>
       </SwitchTransition>
       <Modal
-        isOpen={true}
-        handleCloseModal={() => {}}
+        isOpen={isOpen} 
       >
         <button type="button" onClick={
           () => {
@@ -118,7 +123,7 @@ const Root = () => {
         }>
           Get User Location
         </button>
-      </Modal>
+        </Modal>
       <Toast />
     </main>
   );

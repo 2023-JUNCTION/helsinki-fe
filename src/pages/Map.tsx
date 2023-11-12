@@ -5,11 +5,10 @@ import React, {useEffect, useRef} from 'react';
 import {useDraggable} from 'react-use-draggable-scroll';
 import CanvasImageSequence from 'react-canvas-image-sequence';
 import Character from '~/components/Character';
-import { useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
 import styles from './Map.module.scss';
 
-const IMAGES = Array.from({ length: 30 }, (_v, i) => `Red hair Waking00${String(i + 1).padStart(2, '0')}.png`);
 
 const npcCoordinateDelta = {
   holden: { x: 320, y: 100 },
@@ -104,7 +103,9 @@ const Map = () => {
   }, []);
 
   const onClick = () => {
-    navigate('/detail');
+    navigate({
+      pathname: '/detail',
+    });  
   }
 
   return (
@@ -122,7 +123,7 @@ const Map = () => {
           <Character isNickname type="lay_walking" />
         </button>
         <button className={styles.user} id="hazel" onClick={onClick}>
-          <Character isBad isNickname type="hazel_hair_texting" />
+          <Character isBad isNickname type="hazel_texting" />
         </button>
         <button className={styles.user} id="daniel" onClick={onClick}>
           <Character isNickname type="daniel_dance" />

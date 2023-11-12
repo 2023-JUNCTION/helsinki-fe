@@ -109,6 +109,15 @@ const PURPLE_HAIR_TEXTING = Array.from(
     )}.png`,
 );
 
+const PURPLE_HAIR_WALKING = Array.from(
+  { length: 24 },
+  (_v, i) =>
+    `https://raw.githubusercontent.com/2023-JUNCTION/cdn/main/Smombie NPC(purple hair)_Walking${String(i).padStart(
+      2,
+      '0',
+    )}.png`,
+);
+
 const RED_HAIR_WALKING = Array.from(
   { length: 43 },
   (_v, i) =>
@@ -130,7 +139,8 @@ const CHARACTER_TYPE = {
   jenny_walking: CROWN_GIRL_WALKING,
   holden_sitting: HEADPHONE_BOY_SITTING,
   hazel_jumping_jacks: PURPLE_HAIR_JUMPING_JACKS,
-  hazel_hair_texting: PURPLE_HAIR_TEXTING,
+  hazel_texting: PURPLE_HAIR_TEXTING,
+  hazel_walking: PURPLE_HAIR_WALKING,
   lay_walking: RED_HAIR_WALKING,
 };
 
@@ -150,7 +160,8 @@ type Props = {
     | 'jenny_walking'
     | 'holden_sitting'
     | 'hazel_jumping_jacks'
-    | 'hazel_hair_texting'
+    | 'hazel_texting'
+    | 'hazel_walking'
     | 'lay_walking';
 };
 

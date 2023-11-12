@@ -1,13 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import cn from 'classnames';
 // import { Button } from '~/components';
 // import TeaseBox from '~/components/TeaseBox';
 import { useNavigate } from 'react-router-dom';
 import TeaseAttackBox from '~/components/TeaseAttackBox';
-
 import Character from '~/components/Character';
-
 import { Button } from '~/components';
+import Modal from '~/components/common/Modal';
+
 import styles from './Detail.module.scss';
 
 type Props = {
@@ -20,8 +20,16 @@ const Detail = ({ isTeasing = true }: Props) => {
   const nickName = 'lay';
 
   const onClick = () => navigate(-1);
+
+  const [isOpen, setIsOpen] = useState(true);
   return (
     <div className={cn(styles.container, isTeasing && styles.teasing)}>
+      <Modal isOpen={isOpen}>
+        <div>
+          <div className={styles.modal_title}>Mission has been sent!</div>
+          <Button onClick={() => setIsOpen(false)}>OK</Button>
+        </div>
+      </Modal>
       <button className={styles.back_button} type="button" onClick={onClick}>
         <img src="/back_button.png" alt="back_button" />
       </button>

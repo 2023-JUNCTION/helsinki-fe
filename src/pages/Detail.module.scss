@@ -1,6 +1,6 @@
 .container {
   min-height: 100vh;
-
+  
   .back_button {
     cursor: pointer;
     position: fixed;
@@ -142,4 +142,11 @@
       }
     }
   }
+}
+
+.modal_title {
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
