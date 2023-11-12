@@ -11,6 +11,7 @@ import Mission from './pages/Mission';
 import User from '~/api/transports/User';
 import { Provider, useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
+import Alert from './pages/Alert';
 
 import styles from './index.module.scss';
 import '~/scss/_reset.scss';
@@ -19,6 +20,8 @@ export const routes = [
   { path: '/', name: 'Map', element: <Map />, nodeRef: createRef() },
   { path: '/detail', name: 'Detail', element: <Detail />, nodeRef: createRef() },
   { path: '/mission', name: 'Mission', element: <Mission />, nodeRef: createRef() },
+  { path: '/asdf', name: 'Alert', element: <Alert />, nodeRef: createRef() },
+
 ];
 
 export const grantState = atomWithStorage('grant', false);
