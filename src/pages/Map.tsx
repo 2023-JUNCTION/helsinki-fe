@@ -132,7 +132,7 @@ const Map = () => {
         <button className={styles.user} id="holden" onClick={() => onClick('holden_sitting')}>
           <Character isNickname type="holden_sitting" />
         </button>
-        <button className={styles.user} id="ray" onClick={() => onClick('lay_walking')}>
+        <button className={styles.user} id="ray" onClick={() => navigate('/asdf')}>
           <Character isNickname type="lay_walking" />
         </button>
         <button className={styles.user} id="hazel" onClick={() => onClick(HAZEL[hazelStep])}>
