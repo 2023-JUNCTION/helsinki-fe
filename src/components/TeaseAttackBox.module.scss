@@ -1,0 +1,39 @@
+.container {
+  position: fixed;
+  bottom: 0;
+  width: calc(100% - 30px);
+  height: fit-content;
+  display: flex;
+  justify-content: center;
+  max-height: 50%;
+  box-shadow: 0 3.5px 12px 0 rgb(0 0 0 / 30%);
+  border-top-right-radius: 34px;
+  border-top-left-radius: 34px;
+  flex-direction: column;
+  padding: 20px 15px;
+  transition: transform 0.5s;
+  transform: translateY(calc(100% + 7px));
+
+  &.is_show {
+    transform: translateY(0);
+  }
+
+  .title {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: calc(100% - 44px);
+    padding: 0 22px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #4B4B4B;
+  }
+  
+  .button_group {
+    margin-top: 15px;
+
+    button {
+      margin-bottom: 11px;
+    }
+  }
+}

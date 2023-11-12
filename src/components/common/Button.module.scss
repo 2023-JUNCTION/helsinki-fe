@@ -1,0 +1,26 @@
+.container {
+  background-color: #162DFF;
+  border-radius: 28px;
+  color: white;
+  font-size: 22px;
+  height: 57px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  cursor: pointer;
+
+  &.black {
+    background-color: #323232;
+  }
+
+  box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%);
+
+  &:disabled {
+    cursor: not-allowed;
+    background: white;
+    box-shadow: 0 3px 10px 0 rgb(0 0 0 / 30%) inset;
+    color: #D8D8D8;
+  }
+}
