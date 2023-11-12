@@ -68,7 +68,9 @@ const Mission = () => {
         <img src="/back_button.png" alt="back_button" />
       </button>
       <div className={styles.content}>
-        <Count value={getCount()}/>
+        {jumpingJackCount}
+        {step}
+        <Count value={jumpingJackCount}/>
         <Character type={getType()} />
       </div>
       <MissionBox isMission={isMission} setIsMission={setIsMission}  />
