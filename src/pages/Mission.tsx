@@ -35,12 +35,7 @@ const Mission = () => {
     }
   }, [step, jumpingJackCount]);
 
-  useEffect(() => {
-    if (done) {
-      navigate('/mission/done');
-    }
-  }, [done]);
-
+  
   const getCount = () => {
     if (isMission === 'WALK') {
       return step;
