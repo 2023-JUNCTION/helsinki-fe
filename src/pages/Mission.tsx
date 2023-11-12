@@ -98,13 +98,13 @@ const Mission = () => {
         </Button>
       </Modal>
       <Modal isOpen={done}>
-        <div className={styles.modal_title}>Congraturation!</div>
+        <div className={styles.modal_title}>Congratulation!</div>
         <Button
           labelText="OK"
           onClick={() => {
             popEmoji();
             setTimeout(() => {
-              navigate(-1);
+              navigate('/');
             }, 3000);
           }}
         />
