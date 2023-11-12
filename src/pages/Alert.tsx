@@ -10,7 +10,6 @@ const Alert = () => {
       onClick={() => navigate('/mission')}
       style={{
         display: 'flex',
-
         height: '100vh',
       }}
     >

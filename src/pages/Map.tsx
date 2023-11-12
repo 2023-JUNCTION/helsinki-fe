@@ -14,7 +14,7 @@ import { Button } from '~/components';
 
 
 export const JENNY = ['jenny_laying_down', 'jenny_sit_up', 'jenny_stand_up', 'jenny_walking'];
-export const HAZEL = ['hazel_jumping_jacks', 'hazel_texting', 'hazel_walking'];
+export const HAZEL = ['hazel_texting', 'hazel_jumping_jacks', 'hazel_walking'];
 
 const npcCoordinateDelta = {
   holden: { x: 320, y: 100 },
@@ -123,7 +123,7 @@ const Map = () => {
   
   return (
     <div className={styles.container}>
-      <div className={styles.title}>Feed</div>
+      <button className={styles.title} type="button" onClick={() => navigate('/asdf')}>Feed</button>
       <div className={styles.map} {...events} ref={ref}>
         <img className={styles.image} src="/map.png" alt="cat" ref={imageRef}  id="container"/>
         <button className={styles.user} id="me" onClick={() => onClick('me_standing')}>
