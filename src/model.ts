@@ -14,23 +14,26 @@ interface CreateUserResponse {
 
 interface UpdateUserRequest {
   userId: number;
-  coordinate: CoordinateDto;
+  coordinate: Coordinate;
   movement: MovementStatus;
 }
 
-interface UpdateUserResponse {
+/* eslint-disable */
+interface UpdateUserResponse extends User{
+  npcList: Array<User>;
+}
+
+interface User {
   userId: number;
   nickname: string;
-  coordinate: CoordinateDto;
+  coordinate: Coordinate;
   movement: MovementStatus;
   missionStatus: boolean;
   teases: Tease[];
   connectedUserId: number | null;
-  npc: boolean;
-  userIdForNpc: number | null;
 }
 
-interface CoordinateDto {
+interface Coordinate {
   latitude: number;
   longitude: number;
 }
