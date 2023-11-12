@@ -1,4 +1,5 @@
 import React from 'react';
+import { atomWithStorage } from 'jotai/utils';
 import CanvasImageSequence from 'react-canvas-image-sequence';
 
 import styles from './Character.module.scss';
@@ -142,7 +143,7 @@ const CHARACTER_TYPE = {
   hazel_texting: PURPLE_HAIR_TEXTING,
   hazel_walking: PURPLE_HAIR_WALKING,
   lay_walking: RED_HAIR_WALKING,
-};
+} as unknown as never;
 
 type Props = {
   isBad?: boolean;
@@ -162,8 +163,12 @@ type Props = {
     | 'hazel_jumping_jacks'
     | 'hazel_texting'
     | 'hazel_walking'
-    | 'lay_walking';
+    | 'lay_walking'
+    | string;
 };
+
+export const jennyState = atomWithStorage('jenny', 0);
+export const hazelState = atomWithStorage('hazel', 0);
 
 const Character = ({ type = 'lay_walking', isBad = false, isNickname = false, isTeaseTag = true }: Props) => {
   return (

@@ -4,11 +4,15 @@
 import React, {useEffect, useRef} from 'react';
 import {useDraggable} from 'react-use-draggable-scroll';
 import CanvasImageSequence from 'react-canvas-image-sequence';
-import Character from '~/components/Character';
+import Character, { hazelState, jennyState } from '~/components/Character';
 import { createSearchParams, useNavigate } from 'react-router-dom';
+import { useAtomValue } from 'jotai'
 
 import styles from './Map.module.scss';
 
+
+export const JENNY = ['jenny_laying_down', 'jenny_sit_up', 'jenny_stand_up', 'jenny_walking'];
+export const HAZEL = ['hazel_jumping_jacks', 'hazel_texting', 'hazel_walking'];
 
 const npcCoordinateDelta = {
   holden: { x: 320, y: 100 },
@@ -105,8 +109,12 @@ const Map = () => {
   const onClick = () => {
     navigate({
       pathname: '/detail',
+      search: '?sort=date&order=newest',
     });  
   }
+
+  const jennyStep = useAtomValue(jennyState);
+  const hazelStep = useAtomValue(hazelState);
 
   return (
     <div className={styles.container}>
@@ -123,13 +131,13 @@ const Map = () => {
           <Character isNickname type="lay_walking" />
         </button>
         <button className={styles.user} id="hazel" onClick={onClick}>
-          <Character isBad isNickname type="hazel_texting" />
+          <Character isBad isNickname type={HAZEL[hazelStep]} />
         </button>
         <button className={styles.user} id="daniel" onClick={onClick}>
           <Character isNickname type="daniel_dance" />
         </button>
         <button className={styles.user} id="jenny">
-          <Character isBad isNickname type="jenny_laying_down" />
+          <Character isBad isNickname type={JENNY[jennyStep]} />
         </button>
       </div>
     </div>

@@ -5,34 +5,41 @@ import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { RouterProvider, createBrowserRouter, useLocation, useOutlet } from 'react-router-dom';
 import Detail from '~/pages/Detail';
 import { Button, Toast } from './components';
+import Modal from "~/components/common/Modal";
 import Map from './pages/Map';
 import Mission from './pages/Mission';
+import User from "~/api/transports/User";
+import { Provider, useAtom } from 'jotai'
+import { atomWithStorage } from 'jotai/utils';
 
 import styles from './index.module.scss';
 import '~/scss/_reset.scss';
-import User from "~/api/transports/User";
-import Modal from "~/components/common/Modal";
 
 export const routes = [
-    { path: '/', name: 'Map', element: <Map />, nodeRef: createRef() },
-  { path: '/mission', name: 'Mission', element: <Mission />, nodeRef: createRef() },
+  { path: '/', name: 'Map', element: <Map />, nodeRef: createRef() },
   { path: '/detail', name: 'Detail', element: <Detail />, nodeRef: createRef() },
+  { path: '/mission', name: 'Mission', element: <Mission />, nodeRef: createRef() },
 ];
+
+export const grantState = atomWithStorage('grant', false);
 
 const Root = () => {
   const location = useLocation();
-  const [fetching, setFetching] = useState(false);
+  const [_fetching, _setFetching] = useState(false);
   const currentOutlet = useOutlet();
   const { nodeRef } = routes.find(route => route.path === location.pathname) as { nodeRef: RefObject<HTMLDivElement> };
   const [isOpen, setIsOpen] = useState(!localStorage.getItem('userId'))
   const [isLoading, setIsLoading] = useState(false);
 
-  const [userLocation, setUserLocation] = useState<{ latitude?: number; longitude?: number }>({
+  const [isGranted, setIsGranted] = useAtom(grantState);
+  const [_userLocation, setUserLocation] = useState<{ latitude?: number; longitude?: number }>({
     latitude: undefined,
     longitude: undefined,
   });
 
-  const getUserLocation = () => {
+  const getUserLocation = () => {    
+    setIsLoading(true);
+
     // if geolocation is supported by the users browser
     if (navigator.geolocation) {
       // get the current users location
@@ -42,7 +49,9 @@ const Root = () => {
             const { latitude, longitude } = position.coords as any;
             // update the value of userlocation variable
             setUserLocation({ latitude, longitude });
-            setIsLoading(true);
+            setIsOpen(false);
+            setIsLoading(false);
+            setIsGranted(true);
           },
           // if there was an error getting the users location
           () => {
@@ -56,77 +65,85 @@ const Root = () => {
     }
   };
 
+  useEffect(() => {
+    if (isGranted) {
+      getUserLocation();
+    }
+
+  }, [isGranted]);
+
 
   if (!nodeRef) return null;
 
-  useEffect(() => {
-    return () => {
-    };
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //   };
+  // }, []);
 
-  useEffect(() => {
-    if (!userLocation || userLocation.latitude === undefined || userLocation.longitude === undefined) {
-      return
-    }
+  // useEffect(() => {
+  //   if (!userLocation || userLocation.latitude === undefined || userLocation.longitude === undefined) {
+  //     return
+  //   }
 
-    if (localStorage.getItem('userId') != null) {
-      setIsOpen(false);
-      return
-    }
+  //   if (localStorage.getItem('userId') != null) {
+  //     setIsOpen(false);
+  //     return
+  //   }
       
-    if (fetching) {
-      return
-    }
+  //   if (fetching) {
+  //     return
+  //   }
 
-    // 게스트 가입/로그인
-    (async () => {
-      setFetching(true)
-      const response = await User.createUser(userLocation.latitude ?? 0, userLocation.longitude ?? 0);
-      localStorage.setItem('userId', String(response.id));
-      setFetching(false)
-      setIsOpen(false);
-      setIsLoading(false);
-    })();
-  }, [userLocation]);
+  //   // // 게스트 가입/로그인
+  //   // (async () => {
+  //   //   setFetching(true)
+  //   //   const response = await User.createUser(userLocation.latitude ?? 0, userLocation.longitude ?? 0);
+  //   //   localStorage.setItem('userId', String(response.id));
+  //   //   setFetching(false)
+  //   //   setIsOpen(false);
+  //   //   setIsLoading(false);
+  //   // })();
+  // }, [userLocation]);
 
   return (
-    <main className={styles.page}>
-      <SwitchTransition>
-        <CSSTransition
-          key={location.pathname}
-          nodeRef={nodeRef}
-          timeout={300}
-          classNames={{
-            enter: styles.page_enter,
-            enterActive: styles.page_enter_active,
-            exit: styles.page_exit,
-            exitActive: styles.page_exit_active,
-          }}
-          unmountOnExit
+    <Provider>
+      <main className={styles.page}>
+        <SwitchTransition>
+          <CSSTransition
+            key={location.pathname}
+            nodeRef={nodeRef}
+            timeout={300}
+            classNames={{
+              enter: styles.page_enter,
+              enterActive: styles.page_enter_active,
+              exit: styles.page_exit,
+              exitActive: styles.page_exit_active,
+            }}
+            unmountOnExit
+          >
+            {() => (
+              <div ref={nodeRef} className={styles.content}>
+                {currentOutlet}
+              </div>
+            )}
+          </CSSTransition>
+        </SwitchTransition>
+        <Modal
+          isOpen={isOpen && !isGranted}  
         >
-          {() => (
-            <div ref={nodeRef} className={styles.content}>
-              {currentOutlet}
-            </div>
-          )}
-        </CSSTransition>
-      </SwitchTransition>
-      <Modal
-        isOpen={isOpen} 
-      >
-        <div className={styles.modal_title}>Get User Location, Motion Data</div>
-        <Button type="button" onClick={
-          () => {
-            setInterval(getUserLocation, 1000)
+          <div className={styles.modal_title}>Get User Location,<br />Motion Data</div>
+          <Button type="button" onClick={
+            () => {
+              setInterval(getUserLocation, 1000)
+            }
           }
-          
-        }
-        disabled={isLoading}>
-          {isLoading ? 'Loading...' : 'Agree'}
-        </Button>
-        </Modal>
-      <Toast />
-    </main>
+          disabled={isLoading}>
+            {isLoading ? 'Loading...' : 'Agree'}
+          </Button>
+          </Modal>
+        <Toast />
+      </main>
+    </Provider>
   );
 };
 
