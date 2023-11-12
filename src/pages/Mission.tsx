@@ -25,7 +25,7 @@ const Mission = () => {
 
   return (
     <div className={styles.container}>
-      <button className={styles.back_button} type="button" onClick={() => console.log()}>
+      <button className={styles.back_button} type="button">
         <img src="/back_button.png" alt="back_button" />
       </button>
       <div>
