@@ -12,6 +12,7 @@ import styles from './index.module.scss';
 import '~/scss/_reset.scss';
 import User from "~/api/transports/User";
 import Modal from "~/components/common/Modal";
+import {useDeviceMotion} from "~/hooks";
 
 export const routes = [
     { path: '/', name: 'Map', element: <Map />, nodeRef: createRef() },
@@ -25,6 +26,7 @@ const Root = () => {
   const currentOutlet = useOutlet();
   const { nodeRef } = routes.find(route => route.path === location.pathname) as { nodeRef: RefObject<HTMLDivElement> };
   const [isOpen, setIsOpen] = useState(!localStorage.getItem('userId'))
+  const { isDeviceMotionGranted, onClick } = useDeviceMotion();
 
   const [userLocation, setUserLocation] = useState<{ latitude?: number; longitude?: number }>({
     latitude: undefined,
@@ -38,7 +40,6 @@ const Root = () => {
       navigator.geolocation.getCurrentPosition(
           position => {
             // save the geolocation coordinates in two variables
-            console.log(position)
             const { latitude, longitude } = position.coords as any;
             // update the value of userlocation variable
             setUserLocation({ latitude, longitude });
@@ -64,18 +65,15 @@ const Root = () => {
   }, []);
 
   useEffect(() => {
-    console.log(userLocation, 'a', localStorage.getItem('userId'));
-    console.log(fetching)
-
     if (!userLocation || userLocation.latitude === undefined || userLocation.longitude === undefined) {
       return
     }
 
-    if (localStorage.getItem('userId') != null) {
+    if (localStorage.getItem('userId') != null && isDeviceMotionGranted) {
       setIsOpen(false);
       return
     }
-      
+
     if (fetching) {
       return
     }
@@ -83,10 +81,15 @@ const Root = () => {
     // 게스트 가입/로그인
     (async () => {
       setFetching(true)
+
       const response = await User.createUser(userLocation.latitude ?? 0, userLocation.longitude ?? 0);
       localStorage.setItem('userId', String(response.id));
+      onClick();
+
       setFetching(false)
-      setIsOpen(false);
+      if (localStorage.getItem('userId') != null && isDeviceMotionGranted) {
+        setIsOpen(false);
+      }
     })();
   }, [userLocation]);
 
@@ -114,7 +117,7 @@ const Root = () => {
         </CSSTransition>
       </SwitchTransition>
       <Modal
-        isOpen={isOpen} 
+        isOpen={isOpen}
       >
         <button type="button" onClick={
           () => {

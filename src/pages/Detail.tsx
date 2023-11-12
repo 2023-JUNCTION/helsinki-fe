@@ -3,7 +3,6 @@ import cn from 'classnames';
 // import { Button } from '~/components';
 // import TeaseBox from '~/components/TeaseBox';
 import { useNavigate } from 'react-router-dom';
-import TeaseAttackBox from '~/components/TeaseAttackBox';
 import Character from '~/components/Character';
 import { Button } from '~/components';
 import Modal from '~/components/common/Modal';
@@ -49,7 +48,6 @@ const Detail = ({ isTeasing = true }: Props) => {
           <div className={styles.guage}>
             <img src="/guage.png" alt="guage" width="60%" />
           </div>
-          <TeaseAttackBox />
           <div className={styles.button_group}>
             <Button isBlack labelText="Let's tease" />
             <Button isBlack labelText="Suggest going out!" />

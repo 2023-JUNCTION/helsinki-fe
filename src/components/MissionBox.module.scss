@@ -13,6 +13,8 @@
   padding: 20px 15px;
   transition: transform 0.5s;
   transform: translateY(calc(100% + 7px));
+  background-color: white;
+  z-index: 2;
 
   &.is_show {
     transform: translateY(0);

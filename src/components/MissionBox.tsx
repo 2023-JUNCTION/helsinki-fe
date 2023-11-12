@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
 import cn from 'classnames';
 import { Button } from './common';
 
-import styles from './TeaseAttackBox.module.scss';
+import styles from './MissionBox.module.scss';
 
-const MissionBox = () => {
-  const [isActive, setIsActive] = useState(false);
+type Props = {
+  isMission: string;
+  setIsActive: (isActive: string) => void;
+};
 
-  const onClick = () => {
-    setIsActive(true);
-    setTimeout(() => setIsActive(false), 10000);
+const MissionBox = ({ isMission, setIsActive }: Props) => {
+  const startMission = (missionName: string) => {
+    setIsActive(missionName);
+
+    setTimeout(() => {
+      setIsActive(''); // 미션 상태 끝
+    }, 10000);
   };
 
   return (
-    <div className={cn(styles.container, isActive && styles.is_show)}>
+    <div className={cn(styles.container, !isMission && styles.is_show)}>
       <div className={styles.title}>Complete a mission from your bf and get rid off all the teasing</div>
       <div className={styles.button_group}>
-        <Button labelText="Walk 12 minutes" onClick={onClick} />
-        <Button labelText="Do ten jumping jacks" onClick={onClick} />
+        <Button
+          labelText="Walk 12 minutes"
+          onClick={() => {
+            startMission('WALK');
+          }}
+        />
+        <Button
+          labelText="Do ten jumping jacks"
+          onClick={() => {
+            startMission('JUMPING');
+          }}
+        />
       </div>
     </div>
   );
