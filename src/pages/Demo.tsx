@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDeviceMotion } from '../hooks';
 
 const Demo = () => {
-  const { step, jumpingJackCount, onClick } = useDeviceMotion();
+  const { step, jumpingJackCount, startMotion } = useDeviceMotion();
   // const variable array to save the users location
   const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number }>({
     latitude: 0,
@@ -61,7 +61,7 @@ const Demo = () => {
           alignItems: 'center',
         }}
       >
-        <button type="button" onClick={onClick}>
+        <button type="button" onClick={startMotion}>
           grant
         </button>
         {step}

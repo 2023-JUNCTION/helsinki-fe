@@ -1,6 +1,6 @@
 /* eslint-disable */
 
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Character from '~/components/Character';
 import styles from './Detail.module.scss';
 import MissionBox from "~/components/MissionBox";
@@ -9,7 +9,32 @@ import {useDeviceMotion} from "~/hooks";
 
 const Mission = () => {
   const [isMission, setIsMission] = useState("");
-  const { step, jumpingJackCount, onClick } = useDeviceMotion();
+  const { step, jumpingJackCount, startMotion } = useDeviceMotion();
+
+  useEffect(() => {
+    // @ts-ignore
+    if (isMission === true) {
+      startMotion();
+    }
+  }, [isMission]);
+
+  useEffect(() => {
+    if (step > 100) {
+      setIsMission("WALK");
+    }
+  }, []);
+
+  const getCount = () => {
+    if (isMission === "WALK") {
+      return step;
+    }
+
+    if (isMission === "JUMPING") {
+      return jumpingJackCount;
+    }
+
+    return null
+  }
 
   const getType = () => {
     if (isMission === "WALK") {
@@ -28,11 +53,11 @@ const Mission = () => {
       <button className={styles.back_button} type="button">
         <img src="/back_button.png" alt="back_button" />
       </button>
-      <div>
-        <Count />
+      <div className={styles.content}>
+        <Count value={getCount()}/>
         <Character type={getType()} />
       </div>
-      <MissionBox isMission={isMission} setIsActive={setIsMission} />
+      <MissionBox isMission={isMission} setIsMission={setIsMission}  />
     </div>
   );
 };

@@ -65,7 +65,7 @@ const useDeviceMotion = () => {
     }
   }, []);
 
-  const onClick = () => {
+  const startMotion = () => {
     if (isDeviceMotionGranted) {
       return;
     }
@@ -82,12 +82,18 @@ const useDeviceMotion = () => {
     setJumpingJackCount(0);
   };
 
+  const terminateMotion = () => {
+    reset();
+    window.removeEventListener('devicemotion', motionHandler);
+  };
+
   return {
     step,
     jumpingJackCount,
     reset,
     isDeviceMotionGranted,
-    onClick,
+    terminateMotion,
+    startMotion,
   };
 };
 

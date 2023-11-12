@@ -4,8 +4,15 @@ import cn from 'classnames';
 
 import styles from './Count.module.scss';
 
-const Count = () => {
-  const [value, setValue] = useState(0)
+type Props = {
+  value: number | null;
+}
+
+const Count = ({value} : Props) => {
+  if (value == null) {
+    return null
+  }
+
 
   return (
       <div className={cn(styles.container)}>
