@@ -9,6 +9,14 @@
     height: 100%;
   }
 
+  .title {
+    position: absolute;
+    top: 25px;
+    color: #353535;
+    font-size: 12.98px;
+    font-weight: 700;
+  }
+
   .bad_person {
     position: absolute;
     z-index: -1;
@@ -16,5 +24,11 @@
     width: 80%;
     height: 80%;
     border-radius: 50%;
+  }
+
+  .is_tease_tag {
+    position: absolute;
+    width: 50%;
+    height: 50%;
   }
 }

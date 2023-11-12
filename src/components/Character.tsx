@@ -1,5 +1,4 @@
 import React from 'react';
-import cn from 'classnames';
 import CanvasImageSequence from 'react-canvas-image-sequence';
 
 import styles from './Character.module.scss';
@@ -120,43 +119,47 @@ const RED_HAIR_WALKING = Array.from(
 );
 
 const CHARACTER_TYPE = {
-  FUTURE_BOY_DANCE,
-  BOMB_HAIR_JUMPING_JACKS,
-  BOMB_HAIR_SITTING,
-  BOMB_HAIR_STANDING,
-  BOMB_HAIR_WAKING,
-  CROWN_GIRL_LAYING_DOWN,
-  CROWN_GIRL_SIT_UP,
-  CROWN_GIRL_STAND_UP,
-  CROWN_GIRL_WALKING,
-  HEADPHONE_BOY_SITTING,
-  PURPLE_HAIR_JUMPING_JACKS,
-  PURPLE_HAIR_TEXTING,
-  RED_HAIR_WALKING,
+  daniel_dance: FUTURE_BOY_DANCE,
+  me_jumping_jacks: BOMB_HAIR_JUMPING_JACKS,
+  me_sitting: BOMB_HAIR_SITTING,
+  me_standing: BOMB_HAIR_STANDING,
+  me_walking: BOMB_HAIR_WAKING,
+  jenny_laying_down: CROWN_GIRL_LAYING_DOWN,
+  jenny_sit_up: CROWN_GIRL_SIT_UP,
+  jenny_stand_up: CROWN_GIRL_STAND_UP,
+  jenny_walking: CROWN_GIRL_WALKING,
+  holden_sitting: HEADPHONE_BOY_SITTING,
+  hazel_jumping_jacks: PURPLE_HAIR_JUMPING_JACKS,
+  hazel_hair_texting: PURPLE_HAIR_TEXTING,
+  lay_walking: RED_HAIR_WALKING,
 };
 
 type Props = {
   isBad?: boolean;
+  isNickname?: boolean;
+  isTeaseTag?: boolean;
   type?:
-    | 'FUTURE_BOY_DANCE'
-    | 'BOMB_HAIR_JUMPING_JACKS'
-    | 'BOMB_HAIR_SITTING'
-    | 'BOMB_HAIR_STANDING'
-    | 'BOMB_HAIR_WAKING'
-    | 'CROWN_GIRL_LAYING_DOWN'
-    | 'CROWN_GIRL_SIT_UP'
-    | 'CROWN_GIRL_STAND_UP'
-    | 'CROWN_GIRL_WALKING'
-    | 'HEADPHONE_BOY_SITTING'
-    | 'PURPLE_HAIR_JUMPING_JACKS'
-    | 'PURPLE_HAIR_TEXTING'
-    | 'RED_HAIR_WALKING';
+    | 'daniel_dance'
+    | 'me_jumping_jacks'
+    | 'me_sitting'
+    | 'me_standing'
+    | 'me_walking'
+    | 'jenny_laying_down'
+    | 'jenny_sit_up'
+    | 'jenny_stand_up'
+    | 'jenny_walking'
+    | 'holden_sitting'
+    | 'hazel_jumping_jacks'
+    | 'hazel_hair_texting'
+    | 'lay_walking';
 };
 
-const Character = ({ type = 'BOMB_HAIR_WAKING', isBad = false }: Props) => {
+const Character = ({ type = 'lay_walking', isBad = false, isNickname = false, isTeaseTag = true }: Props) => {
   return (
     <div className={styles.container}>
-      <div className={cn(isBad && styles.bad_person)} />
+      {isNickname && <div className={styles.title}>{type.split('_')[0]}</div>}
+      {isBad && <div className={styles.bad_person} />}
+      {isTeaseTag && <img className={styles.is_tease_tag} src="/teasetag.png" alt="teasetag" />}
       <CanvasImageSequence fps={30} loop autoPlay data={CHARACTER_TYPE[type]} />
     </div>
   );

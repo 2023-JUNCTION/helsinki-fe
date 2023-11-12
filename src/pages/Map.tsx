@@ -6,6 +6,7 @@ import {useDraggable} from 'react-use-draggable-scroll';
 import CanvasImageSequence from 'react-canvas-image-sequence';
 
 import styles from './Map.module.scss';
+import Character from '~/components/Character';
 
 const IMAGES = Array.from({ length: 30 }, (_v, i) => `Red hair Waking00${String(i + 1).padStart(2, '0')}.png`);
 
@@ -103,24 +104,24 @@ const Map = () => {
     <div className={styles.container}>
       <div className={styles.map} {...events} ref={ref}>
         <img className={styles.image} src="/map.png" alt="cat" ref={imageRef}  id="container"/>
-        <div className={styles.user} id="me">
-          <CanvasImageSequence fps={24} loop autoPlay data={IMAGES} />
-        </div>
-        <div className={styles.user} id="holden">
-          <CanvasImageSequence fps={24} loop autoPlay data={IMAGES} />
-        </div>
-        <div className={styles.user} id="ray">
-          <CanvasImageSequence fps={24} loop autoPlay data={IMAGES} />
-        </div>
-        <div className={styles.user} id="hazel">
-          <CanvasImageSequence fps={24} loop autoPlay data={IMAGES} />
-        </div>
-        <div className={styles.user} id="daniel">
-          <CanvasImageSequence fps={24} loop autoPlay data={IMAGES} />
-        </div>
-        <div className={styles.user} id="jenny">
-          <CanvasImageSequence fps={24} loop autoPlay data={IMAGES} />
-        </div>
+        <button className={styles.user} id="me">
+          <Character isNickname type="me_standing" />
+        </button>
+        <button className={styles.user} id="holden">
+          <Character isNickname type="holden_sitting" />
+        </button>
+        <button className={styles.user} id="ray">
+          <Character isNickname type="lay_walking" />
+        </button>
+        <button className={styles.user} id="hazel">
+          <Character isBad isNickname type="hazel_hair_texting" />
+        </button>
+        <button className={styles.user} id="daniel">
+          <Character isNickname type="daniel_dance" />
+        </button>
+        <button className={styles.user} id="jenny">
+          <Character isBad isNickname type="jenny_laying_down" />
+        </button>
       </div>
     </div>
   );

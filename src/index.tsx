@@ -5,7 +5,7 @@ import { RouterProvider, createBrowserRouter, useLocation, useOutlet } from 'rea
 import { Toast } from './components';
 import Demo from './pages/Demo';
 import Map from './pages/Map';
-import Teasing from './pages/Teasing';
+import Detail from './pages/Detail';
 
 import styles from './index.module.scss';
 import '~/scss/_reset.scss';
@@ -13,7 +13,7 @@ import '~/scss/_reset.scss';
 export const routes = [
   { path: '/', name: 'Demo', element: <Demo />, nodeRef: createRef() },
   { path: '/map', name: 'Demo2', element: <Map />, nodeRef: createRef() },
-  { path: '/teasing', name: 'Teasing', element: <Teasing />, nodeRef: createRef() },
+  { path: '/detail', name: 'Detail', element: <Detail />, nodeRef: createRef() },
 ];
 
 const Root = () => {
