@@ -1,4 +1,5 @@
 import React from 'react';
+import cn from 'classnames';
 import CanvasImageSequence from 'react-canvas-image-sequence';
 
 import styles from './Character.module.scss';
@@ -135,6 +136,7 @@ const CHARACTER_TYPE = {
 };
 
 type Props = {
+  isBad?: boolean;
   type?:
     | 'FUTURE_BOY_DANCE'
     | 'BOMB_HAIR_JUMPING_JACKS'
@@ -151,10 +153,11 @@ type Props = {
     | 'RED_HAIR_WALKING';
 };
 
-const Character = ({ type = 'FUTURE_BOY_DANCE' }: Props) => {
+const Character = ({ type = 'BOMB_HAIR_WAKING', isBad = false }: Props) => {
   return (
     <div className={styles.container}>
-      <CanvasImageSequence fps={40} loop autoPlay data={CHARACTER_TYPE[type]} />
+      <div className={cn(isBad && styles.bad_person)} />
+      <CanvasImageSequence fps={30} loop autoPlay data={CHARACTER_TYPE[type]} />
     </div>
   );
 };
