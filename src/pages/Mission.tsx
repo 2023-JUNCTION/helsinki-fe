@@ -10,7 +10,7 @@ import {useNavigate} from "react-router-dom";
 
 const Mission = () => {
   const [isMission, setIsMission] = useState("");
-  const { step, jumpingJackCount, startMotion } = useDeviceMotion();
+  const { yg, step, jumpingJackCount, startMotion } = useDeviceMotion();
   const [done, setDone] = useState(false);
 
   const navigate = useNavigate();
@@ -69,7 +69,10 @@ const Mission = () => {
       </button>
       <div className={styles.content}>
         {jumpingJackCount}
+        <br/>
         {step}
+        <br/>
+        {yg}
         <Count value={jumpingJackCount}/>
         <Character type={getType()} />
       </div>

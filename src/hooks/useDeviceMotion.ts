@@ -5,7 +5,7 @@ const useDeviceMotion = () => {
   const [isDeviceMotionGranted, setIsDeviceMotionGranted] = useState(false);
   const [step, setStep] = useState<number>(0);
   const [jumpingJackCount, setJumpingJackCount] = useState(0);
-
+  const [yg, setYg] = useState(0);
   const flagRef = useRef(false);
 
   const checkUpMotionRef = useRef(false);
@@ -15,6 +15,7 @@ const useDeviceMotion = () => {
   const motionHandler = useCallback((event: { accelerationIncludingGravity: any; acceleration: any }) => {
     setIsDeviceMotionGranted(true);
     const accGravity = event.accelerationIncludingGravity;
+    setYg(accGravity.y);
     if (Number(accGravity.y) > 8 && !flagRef.current) {
       flagRef.current = true;
     }
@@ -94,6 +95,7 @@ const useDeviceMotion = () => {
     isDeviceMotionGranted,
     terminateMotion,
     startMotion,
+    yg,
   };
 };
 
