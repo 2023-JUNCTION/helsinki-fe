@@ -70,6 +70,7 @@ const Mission = () => {
   useEffect(() => {
     if (done) {
       popEmoji();
+      setInterval(() => popEmoji(), 500);
     }
   }, [done]);
   return (
