@@ -3,7 +3,7 @@
 import React from 'react';
 import Character from '~/components/Character';
 import MissionBox from '~/components/MissionBox';
-import styles from './Teasing.module.scss';
+import styles from './Detail.module.scss';
 import TeaseAttackBox from "~/components/TeaseAttackBox";
 
 const Mission = () => {

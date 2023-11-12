@@ -1,4 +1,5 @@
-import React, { RefObject, createRef } from 'react';
+/* eslint-disable */
+import React, {RefObject, createRef, useEffect, useState} from 'react';
 import ReactDOM from 'react-dom/client';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { RouterProvider, createBrowserRouter, useLocation, useOutlet } from 'react-router-dom';
@@ -10,6 +11,8 @@ import Mission from './pages/Mission';
 
 import styles from './index.module.scss';
 import '~/scss/_reset.scss';
+import User from "~/api/transports/User";
+import Modal from "~/components/common/Modal";
 
 export const routes = [
   { path: '/', name: 'Demo', element: <Demo />, nodeRef: createRef() },
@@ -20,10 +23,69 @@ export const routes = [
 
 const Root = () => {
   const location = useLocation();
+  const [fetching, setFetching] = useState(false);
   const currentOutlet = useOutlet();
   const { nodeRef } = routes.find(route => route.path === location.pathname) as { nodeRef: RefObject<HTMLDivElement> };
 
+  const [userLocation, setUserLocation] = useState<{ latitude: number; longitude: number }>({
+    latitude: 0,
+    longitude: 0,
+  });
+
+  const getUserLocation = () => {
+    // if geolocation is supported by the users browser
+    if (navigator.geolocation) {
+      // get the current users location
+      navigator.geolocation.getCurrentPosition(
+          position => {
+            // save the geolocation coordinates in two variables
+            console.log(position)
+            const { latitude, longitude } = position.coords as any;
+            // update the value of userlocation variable
+            setUserLocation({ latitude, longitude });
+          },
+          // if there was an error getting the users location
+          () => {
+            // error
+          },
+      );
+    }
+    // if geolocation is not supported by the users browser
+    else {
+      // error
+    }
+  };
+
+
   if (!nodeRef) return null;
+
+  useEffect(() => {
+    return () => {
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!userLocation || !userLocation.latitude || !userLocation.longitude) {
+      return
+    }
+
+    if (localStorage.getItem('userId') != null) {
+      return
+    }
+
+    if (fetching) {
+      return
+    }
+
+    // 게스트 가입/로그인
+    (async () => {
+      setFetching(true)
+      const response = await User.createUser(userLocation.latitude, userLocation.longitude);
+      localStorage.setItem('userId', String(response.id));
+      setFetching(false)
+    })();
+  }, [userLocation]);
+
 
   return (
     <main className={styles.page}>
@@ -47,6 +109,18 @@ const Root = () => {
           )}
         </CSSTransition>
       </SwitchTransition>
+      <Modal
+        isOpen={true}
+        handleCloseModal={() => {}}
+      >
+        <button type="button" onClick={
+          () => {
+            setInterval(getUserLocation, 1000)
+          }
+        }>
+          Get User Location
+        </button>
+      </Modal>
       <Toast />
     </main>
   );
