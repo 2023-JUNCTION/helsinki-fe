@@ -1,16 +1,24 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import cn from 'classnames';
 import { Button } from './common';
 
 import styles from './TeaseBox.module.scss';
 
-const TeaseBox = () => {
+type Props = {
+  isOpen: boolean;
+  onClick?: any;
+};
+
+const TeaseBox = ({ isOpen, onClick }: Props) => {
   const [isActive, setIsActive] = useState(false);
   useEffect(() => {
-    setTimeout(() => setIsActive(true));
-  }, []);
+    if (isOpen) {
+      setTimeout(() => setIsActive(true));
+    }
+  }, [isOpen]);
 
-  const onClick = () => setIsActive(false);
+  // const onClicka = () => setIsActive(false);
 
   return (
     <div className={cn(styles.container, isActive && styles.is_show)}>
@@ -32,8 +40,8 @@ const TeaseBox = () => {
       <div className={styles.title}>Give Jenny a mission to move!</div>
 
       <div className={styles.button_group}>
-        <Button isBlack labelText="Walk 12 minutes" />
-        <Button isBlack labelText="Do ten jumping jacks" />
+        <Button isBlack labelText="Walk 12 minutes" onClick={() => onClick(true)} />
+        <Button isBlack labelText="Do ten jumping jacks" onClick={() => onClick(true)} />
         <Button isBlack labelText="Type to give a mission" disabled />
       </div>
     </div>

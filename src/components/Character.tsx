@@ -169,8 +169,10 @@ type Props = {
 
 export const jennyState = atomWithStorage('jenny', 0);
 export const hazelState = atomWithStorage('hazel', 0);
+export const jennyIsBad = atomWithStorage('jennyIsBad', false);
+export const hazelIsBad = atomWithStorage('hazelIsBad', false);
 
-const Character = ({ type = 'lay_walking', isBad = false, isNickname = false, isTeaseTag = true }: Props) => {
+const Character = ({ type = 'lay_walking', isBad = false, isNickname = false, isTeaseTag = false }: Props) => {
   return (
     <div className={styles.container}>
       {isNickname && <div className={styles.title}>{type.split('_')[0]}</div>}
