@@ -61,3 +61,8 @@ button {
 a {
 	text-decoration: none;
 }
+
+* {
+  /* stylelint-disable-next-line font-family-no-missing-generic-family-keyword */
+  font-family: Poppins !important;
+}
