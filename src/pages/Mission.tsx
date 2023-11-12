@@ -5,7 +5,7 @@ import Character from '~/components/Character';
 import styles from './Detail.module.scss';
 import MissionBox from '~/components/MissionBox';
 import Count from '~/components/Count';
-import { useDeviceMotion } from '~/hooks';
+import { useConfetti, useDeviceMotion } from '~/hooks';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '~/components';
 import Modal from '~/components/common/Modal';
@@ -14,6 +14,7 @@ const Mission = () => {
   const [isMission, setIsMission] = useState('');
   const { yg, step, jumpingJackCount, startMotion, isDeviceMotionGranted } = useDeviceMotion();
   const [done, setDone] = useState(false);
+  const { popEmoji } = useConfetti();
 
   const navigate = useNavigate();
 
@@ -25,11 +26,11 @@ const Mission = () => {
   }, [isMission]);
 
   useEffect(() => {
-    if (step > 10) {
+    if (step >= 10) {
       setDone(true);
     }
 
-    if (jumpingJackCount > 5) {
+    if (jumpingJackCount >= 5) {
       setDone(true);
     }
   }, [step, jumpingJackCount]);
@@ -66,17 +67,17 @@ const Mission = () => {
 
   const [isOpen, setIsOpen] = useState(true);
 
+  useEffect(() => {
+    if (done) {
+      popEmoji();
+    }
+  }, [done]);
   return (
     <div className={styles.container}>
       <button className={styles.back_button} type="button">
         <img src="/back_button.png" alt="back_button" />
       </button>
       <div className={styles.content}>
-        {jumpingJackCount}
-        <br />
-        {step}
-        <br />
-        {yg}
         <Count value={jumpingJackCount} />
         <Character type={getType()} />
       </div>
@@ -88,13 +89,25 @@ const Mission = () => {
         </div>
         <Button
           type="button"
-          onClick={async ()  => {
+          onClick={async () => {
             await startMotion();
             setIsOpen(false);
           }}
         >
-         Agree
+          Agree
         </Button>
+      </Modal>
+      <Modal isOpen={done}>
+        <div className={styles.modal_title}>Congraturation!</div>
+        <Button
+          labelText="OK"
+          onClick={() => {
+            popEmoji();
+            setTimeout(() => {
+              navigate(-1);
+            }, 3000);
+          }}
+        />
       </Modal>
       <MissionBox isMission={isMission} setIsMission={setIsMission} />
     </div>

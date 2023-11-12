@@ -37,7 +37,7 @@ const Detail = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleClickEmoji = (isTeass: boolean = true) => {
-    if (!isTeass) {
+    if (isTeass) {
       setIsModalOpen(true);
 
       if (nickName === 'hazel') {
@@ -49,11 +49,25 @@ const Detail = () => {
       }
     } else {
       if (nickName === 'hazel') {
-        setHazleStep(prev => (prev + 1) % 3);
+        setHazleStep(prev => {
+          if (prev <= 1) {
+            setHazleIsBad(true);
+          } else {
+            setHazleIsBad(false);
+          }
+          return (prev + 1) % 3;
+        });
       }
 
       if (nickName === 'jenny') {
-        setJennyStep(prev => (prev + 1) % 2);
+        setJennyStep(prev => {
+          if (prev <= 1) {
+            setJennyIsBad(true);
+          } else {
+            setJennyIsBad(false);
+          }
+          return (prev + 1) % 2;
+        });
       }
       setIsOpen(true);
     }
