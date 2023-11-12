@@ -4,9 +4,10 @@
 import React, {useEffect, useRef} from 'react';
 import {useDraggable} from 'react-use-draggable-scroll';
 import CanvasImageSequence from 'react-canvas-image-sequence';
+import Character from '~/components/Character';
+import { useNavigate } from 'react-router-dom';
 
 import styles from './Map.module.scss';
-import Character from '~/components/Character';
 
 const IMAGES = Array.from({ length: 30 }, (_v, i) => `Red hair Waking00${String(i + 1).padStart(2, '0')}.png`);
 
@@ -79,6 +80,8 @@ const getDistance = (me: Coordinate, opponent: Coordinate) => {
 }
 
 const Map = () => {
+  const navigate = useNavigate();
+
   const ref = useRef<any>(null);
   const { events } = useDraggable(ref, {
     applyRubberBandEffect: true,
@@ -100,23 +103,28 @@ const Map = () => {
     moveNpc()
   }, []);
 
+  const onClick = () => {
+    navigate('/detail');
+  }
+
   return (
     <div className={styles.container}>
+      <div className={styles.title}>Feed</div>
       <div className={styles.map} {...events} ref={ref}>
         <img className={styles.image} src="/map.png" alt="cat" ref={imageRef}  id="container"/>
-        <button className={styles.user} id="me">
+        <button className={styles.user} id="me"  onClick={onClick}>
           <Character isNickname type="me_standing" />
         </button>
-        <button className={styles.user} id="holden">
+        <button className={styles.user} id="holden" onClick={onClick}>
           <Character isNickname type="holden_sitting" />
         </button>
-        <button className={styles.user} id="ray">
+        <button className={styles.user} id="ray" onClick={onClick}>
           <Character isNickname type="lay_walking" />
         </button>
-        <button className={styles.user} id="hazel">
+        <button className={styles.user} id="hazel" onClick={onClick}>
           <Character isBad isNickname type="hazel_hair_texting" />
         </button>
-        <button className={styles.user} id="daniel">
+        <button className={styles.user} id="daniel" onClick={onClick}>
           <Character isNickname type="daniel_dance" />
         </button>
         <button className={styles.user} id="jenny">
