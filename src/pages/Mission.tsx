@@ -26,11 +26,11 @@ const Mission = () => {
   }, [isMission]);
 
   useEffect(() => {
-    if (step >= 10) {
+    if (step >= 10 && isMission === 'WALK') {
       setDone(true);
     }
 
-    if (jumpingJackCount >= 5) {
+    if (jumpingJackCount >= 5 && isMission === 'JUMPING') {
       setDone(true);
     }
   }, [step, jumpingJackCount]);
