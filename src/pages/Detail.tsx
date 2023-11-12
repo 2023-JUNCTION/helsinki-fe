@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState } from 'react';
 import cn from 'classnames';
 // import { Button } from '~/components';
@@ -49,6 +50,12 @@ const Detail = () => {
     }
   };
 
+  const [isOpenGointOutModal, setIsOpenGoingoutModal] = useState(0);
+
+  const haldeStep = () => {
+    setIsOpenGoingoutModal(prev => prev + 1);
+  };
+
   return (
     <div className={cn(styles.container, isTeasing && styles.teasing)}>
       <Modal isOpen={isOpen}>
@@ -81,7 +88,7 @@ const Detail = () => {
           </div>
           <div className={styles.button_group}>
             <Button isBlack labelText="Let's tease" onClick={() => setIsDrawerOpen(true)} />
-            <Button isBlack labelText="Suggest going out!" />
+            <Button isBlack labelText="Suggest going out!" onClick={haldeStep} />
           </div>
         </>
       ) : (
@@ -110,6 +117,48 @@ const Detail = () => {
       <Modal isOpen={isModalOpen}>
         <div className={styles.modal_title}>Mission has been sent!</div>
         <Button labelText="OK" onClick={() => navigate(-1)} />
+      </Modal>
+
+      <Modal isOpen={!!isOpenGointOutModal}>
+        {isOpenGointOutModal === 1 && (
+          <>
+            <div className={styles.modal_title}>Today’s recommendation</div>
+            <img className={styles.modal_image} src="/map_route.png" alt="map_route" />
+            <div className={styles.modal_title}>There’s a lovely route nearby, what about go stroll?</div>
+          </>
+        )}
+        {isOpenGointOutModal === 2 && (
+          <div className={styles.modal_title}>
+            {' '}
+            <br />
+            Suggested sented!
+            <br />
+            <br />
+            You'll be notified upon her acceptance
+            <br />
+          </div>
+        )}
+        {isOpenGointOutModal === 3 && (
+          <div className={styles.modal_title}>
+            <br />
+            <br />
+            Jenny is in table
+            <br />
+            <br />
+            <b>no.12312</b> <br /> <br />
+            at team hyva!
+            <br />
+            <br />
+            Visit to stroll out
+            <br />
+            <br />
+            <br />
+            You should hi-five with Jenny to start stroll
+            <br />
+            <br />
+          </div>
+        )}
+        {isOpenGointOutModal !== 3 && <Button onClick={() => haldeStep()}>OK</Button>}
       </Modal>
       <TeaseBox isOpen={isDrawerOpen} onClick={handleClickEmoji} />
     </div>
