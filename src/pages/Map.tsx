@@ -119,7 +119,7 @@ const Map = () => {
   const hazelStep = useAtomValue(hazelState);
   const jennyBad = useAtomValue(jennyIsBad);
   const hazelBad = useAtomValue(hazelIsBad);
-
+  
   
   return (
     <div className={styles.container}>

@@ -1,16 +1,18 @@
 /* eslint-disable */
 
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import Character from '~/components/Character';
 import styles from './Detail.module.scss';
-import MissionBox from "~/components/MissionBox";
-import Count from "~/components/Count";
-import {useDeviceMotion} from "~/hooks";
-import {useNavigate} from "react-router-dom";
+import MissionBox from '~/components/MissionBox';
+import Count from '~/components/Count';
+import { useDeviceMotion } from '~/hooks';
+import { useNavigate } from 'react-router-dom';
+import { Button } from '~/components';
+import Modal from '~/components/common/Modal';
 
 const Mission = () => {
-  const [isMission, setIsMission] = useState("");
-  const { yg, step, jumpingJackCount, startMotion } = useDeviceMotion();
+  const [isMission, setIsMission] = useState('');
+  const { yg, step, jumpingJackCount, startMotion, isDeviceMotionGranted } = useDeviceMotion();
   const [done, setDone] = useState(false);
 
   const navigate = useNavigate();
@@ -24,43 +26,45 @@ const Mission = () => {
 
   useEffect(() => {
     if (step > 10) {
-      setDone(true)
+      setDone(true);
     }
 
     if (jumpingJackCount > 5) {
-      setDone(true)
+      setDone(true);
     }
   }, [step, jumpingJackCount]);
 
   useEffect(() => {
     if (done) {
-      navigate("/mission/done")
+      navigate('/mission/done');
     }
   }, [done]);
 
   const getCount = () => {
-    if (isMission === "WALK") {
+    if (isMission === 'WALK') {
       return step;
     }
 
-    if (isMission === "JUMPING") {
+    if (isMission === 'JUMPING') {
       return jumpingJackCount;
     }
 
-    return null
-  }
+    return null;
+  };
 
   const getType = () => {
-    if (isMission === "WALK") {
-      return "me_walking";
+    if (isMission === 'WALK') {
+      return 'me_walking';
     }
 
-    if (isMission === "JUMPING") {
-      return "me_jumping_jacks";
+    if (isMission === 'JUMPING') {
+      return 'me_jumping_jacks';
     }
 
-    return "me_standing";
-  }
+    return 'me_standing';
+  };
+
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <div className={styles.container}>
@@ -69,14 +73,30 @@ const Mission = () => {
       </button>
       <div className={styles.content}>
         {jumpingJackCount}
-        <br/>
+        <br />
         {step}
-        <br/>
+        <br />
         {yg}
-        <Count value={jumpingJackCount}/>
+        <Count value={jumpingJackCount} />
         <Character type={getType()} />
       </div>
-      <MissionBox isMission={isMission} setIsMission={setIsMission}  />
+      <Modal isOpen={isOpen && !isDeviceMotionGranted}>
+        <div className={styles.modal_title}>
+          Get User Location,
+          <br />
+          Motion Data
+        </div>
+        <Button
+          type="button"
+          onClick={async ()  => {
+            await startMotion();
+            setIsOpen(false);
+          }}
+        >
+         Agree
+        </Button>
+      </Modal>
+      <MissionBox isMission={isMission} setIsMission={setIsMission} />
     </div>
   );
 };

@@ -1,15 +1,15 @@
 /* eslint-disable */
-import React, {RefObject, createRef, useEffect, useState} from 'react';
+import React, { RefObject, createRef, useEffect, useState } from 'react';
 import ReactDOM from 'react-dom/client';
 import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import { RouterProvider, createBrowserRouter, useLocation, useOutlet } from 'react-router-dom';
 import Detail from '~/pages/Detail';
 import { Button, Toast } from './components';
-import Modal from "~/components/common/Modal";
+import Modal from '~/components/common/Modal';
 import Map from './pages/Map';
 import Mission from './pages/Mission';
-import User from "~/api/transports/User";
-import { Provider, useAtom } from 'jotai'
+import User from '~/api/transports/User';
+import { Provider, useAtom } from 'jotai';
 import { atomWithStorage } from 'jotai/utils';
 
 import styles from './index.module.scss';
@@ -28,7 +28,7 @@ const Root = () => {
   const [_fetching, _setFetching] = useState(false);
   const currentOutlet = useOutlet();
   const { nodeRef } = routes.find(route => route.path === location.pathname) as { nodeRef: RefObject<HTMLDivElement> };
-  const [isOpen, setIsOpen] = useState(!localStorage.getItem('userId'))
+  const [isOpen, setIsOpen] = useState(!localStorage.getItem('userId'));
   const [isLoading, setIsLoading] = useState(false);
 
   const [isGranted, setIsGranted] = useAtom(grantState);
@@ -37,26 +37,26 @@ const Root = () => {
     longitude: undefined,
   });
 
-  const getUserLocation = () => {    
+  const getUserLocation = () => {
     setIsLoading(true);
 
     // if geolocation is supported by the users browser
     if (navigator.geolocation) {
       // get the current users location
       navigator.geolocation.getCurrentPosition(
-          position => {
-            // save the geolocation coordinates in two variables
-            const { latitude, longitude } = position.coords as any;
-            // update the value of userlocation variable
-            setUserLocation({ latitude, longitude });
-            setIsOpen(false);
-            setIsLoading(false);
-            setIsGranted(true);
-          },
-          // if there was an error getting the users location
-          () => {
-            // error
-          },
+        position => {
+          // save the geolocation coordinates in two variables
+          const { latitude, longitude } = position.coords as any;
+          // update the value of userlocation variable
+          setUserLocation({ latitude, longitude });
+          setIsOpen(false);
+          setIsLoading(false);
+          setIsGranted(true);
+        },
+        // if there was an error getting the users location
+        () => {
+          // error
+        },
       );
     }
     // if geolocation is not supported by the users browser
@@ -69,9 +69,7 @@ const Root = () => {
     if (isGranted) {
       getUserLocation();
     }
-
   }, [isGranted]);
-
 
   if (!nodeRef) return null;
 
@@ -89,7 +87,7 @@ const Root = () => {
   //     setIsOpen(false);
   //     return
   //   }
-      
+
   //   if (fetching) {
   //     return
   //   }
@@ -128,19 +126,22 @@ const Root = () => {
             )}
           </CSSTransition>
         </SwitchTransition>
-        <Modal
-          isOpen={isOpen && !isGranted}  
-        >
-          <div className={styles.modal_title}>Get User Location,<br />Motion Data</div>
-          <Button type="button" onClick={
-            () => {
-              setInterval(getUserLocation, 1000)
-            }
-          }
-          disabled={isLoading}>
+        <Modal isOpen={isOpen && !isGranted}>
+          <div className={styles.modal_title}>
+            Get User Location,
+            <br />
+            Motion Data
+          </div>
+          <Button
+            type="button"
+            onClick={() => {
+              setInterval(getUserLocation, 1000);
+            }}
+            disabled={isLoading}
+          >
             {isLoading ? 'Loading...' : 'Agree'}
           </Button>
-          </Modal>
+        </Modal>
         <Toast />
       </main>
     </Provider>

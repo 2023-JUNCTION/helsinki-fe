@@ -4,8 +4,8 @@ import cn from 'classnames';
 // import { Button } from '~/components';
 // import TeaseBox from '~/components/TeaseBox';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { useAtom } from 'jotai';
-import Character, { hazelIsBad, jennyIsBad } from '~/components/Character';
+import { useAtom, useSetAtom } from 'jotai';
+import Character, { hazelIsBad, hazelState, jennyIsBad, jennyState } from '~/components/Character';
 import { Button } from '~/components';
 import Modal from '~/components/common/Modal';
 
@@ -30,6 +30,8 @@ const Detail = () => {
   // const isMe = nickName === 'me';
   const [jennyBad, setJennyIsBad] = useAtom(jennyIsBad);
   const [hazelBad, setHazleIsBad] = useAtom(hazelIsBad);
+  const setJennyStep = useSetAtom(jennyState);
+  const setHazleStep = useSetAtom(hazelState);
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -37,16 +39,23 @@ const Detail = () => {
   const handleClickEmoji = (isTeass: boolean = true) => {
     if (!isTeass) {
       setIsModalOpen(true);
+
+      if (nickName === 'hazel') {
+        setHazleIsBad(true);
+      }
+
+      if (nickName === 'jenny') {
+        setJennyIsBad(true);
+      }
     } else {
+      if (nickName === 'hazel') {
+        setHazleStep(prev => (prev + 1) % 3);
+      }
+
+      if (nickName === 'jenny') {
+        setJennyStep(prev => (prev + 1) % 2);
+      }
       setIsOpen(true);
-    }
-
-    if (nickName === 'hazel') {
-      setHazleIsBad(true);
-    }
-
-    if (nickName === 'jenny') {
-      setJennyIsBad(true);
     }
   };
 
