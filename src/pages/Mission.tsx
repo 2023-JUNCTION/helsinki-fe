@@ -6,10 +6,14 @@ import styles from './Detail.module.scss';
 import MissionBox from "~/components/MissionBox";
 import Count from "~/components/Count";
 import {useDeviceMotion} from "~/hooks";
+import {useNavigate} from "react-router-dom";
 
 const Mission = () => {
   const [isMission, setIsMission] = useState("");
   const { step, jumpingJackCount, startMotion } = useDeviceMotion();
+  const [done, setDone] = useState(false);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     // @ts-ignore
@@ -19,10 +23,20 @@ const Mission = () => {
   }, [isMission]);
 
   useEffect(() => {
-    if (step > 100) {
-      setIsMission("WALK");
+    if (step > 10) {
+      setDone(true)
     }
-  }, []);
+
+    if (jumpingJackCount > 5) {
+      setDone(true)
+    }
+  }, [step, jumpingJackCount]);
+
+  useEffect(() => {
+    if (done) {
+      navigate("/mission/done")
+    }
+  }, [done]);
 
   const getCount = () => {
     if (isMission === "WALK") {
